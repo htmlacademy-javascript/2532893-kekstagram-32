@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Yury Andreyev](https://up.htmlacademy.ru/javascript/32/user/2532893).
-* Наставник: `Неизвестно`.
+* Наставник: [Олег Глущенко](https://htmlacademy.ru/profile/id305355).
 
 ---
 
