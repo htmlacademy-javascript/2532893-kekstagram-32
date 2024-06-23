@@ -44,8 +44,8 @@ const getNaturalNumbersFromString = function (str) {
         break;
     }
   }
-  const finalArr = acc.filter((item) => item !== 0);
+  const finalArr = acc.filter((item) => item >= 0);
   return +finalArr.join('');
 };
 // eslint-disable-next-line no-console
-console.log(getNaturalNumbersFromString('aa56a034'));
+console.log(getNaturalNumbersFromString('00aa56a03-4'));
