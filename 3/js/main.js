@@ -5,6 +5,16 @@ const countOfPhotos = 25;
 function getRandomNum(min, max){
   return Math.floor(Math.random() * (max + min - 1) + min);
 }
+// Генератор уникальных ID
+function getUniqueID(){
+  let uniqueID = 0;
+  return function(){
+    uniqueID += 1;
+    return uniqueID;
+  };
+}
+
+const getCommentID = getUniqueID();
 
 // Массив ID
 const getArrayOfID = function(){
@@ -14,7 +24,7 @@ const getArrayOfID = function(){
   }
   return arrayOfID;
 };
-// console.log(getArrayOfID());
+
 
 // Массив URL
 const getArrayOfURL = function(){
@@ -25,7 +35,7 @@ const getArrayOfURL = function(){
   }
   return arrayOfURL;
 };
-// console.log(getArrayOfURL());
+
 
 // Массив текстовых описаний фотографий
 const getArrayOfDescriptions = ['Пляж отеля', 'Указатель', 'Океан', 'Девушка на пляже', 'Мисо', 'Ламборгини', 'Клубника', 'Морс', 'Самолёт', 'Обувница', 'Яркое небо', 'Ауди', 'Салат', 'Суши-котик', 'Угги', 'Вид из самолёта', 'Оркестр', 'Ретро-авто', 'Тапочки с фонариком', 'Пальмы в отеле', 'Завтрак', 'Закат на Бали', 'Краб', 'Концерт', 'Сафари'];
@@ -48,23 +58,20 @@ const getArrayOfNames = ['Александр', 'Алексей', 'Андрей',
 
 const createComment = function(){
   return {
-    id: getRandomNum(1, 200),
+    id: getCommentID(),
     avatar: getURLofAvatar(),
     message: messages[getRandomNum(0, messages.length - 1)],
     name: getArrayOfNames[getRandomNum(0, messages.length - 1)]
   };
 
 };
-// console.log(createComment());
+
 
 // Массив объектов с комментариями
 const getArrayOfComments = function(){
   return Array.from({length: getRandomNum(0, 30)}, createComment);
 };
 
-// console.log(getArrayOfComments());
-// console.log(getArrayOfComments());
-// console.log(getArrayOfComments());
 
 // Массив объектов
 const getArrayOfObjects = function(){
