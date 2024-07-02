@@ -5,6 +5,16 @@ const countOfPhotos = 25;
 function getRandomNum(min, max){
   return Math.floor(Math.random() * (max + min - 1) + min);
 }
+// Генератор уникальных ID
+function getUniqueID(){
+  let uniqueID = 0;
+  return function(){
+    uniqueID += 1;
+    return uniqueID;
+  };
+}
+
+const getCommentID = getUniqueID();
 
 // Массив ID
 const getArrayOfID = function(){
@@ -48,7 +58,7 @@ const getArrayOfNames = ['Александр', 'Алексей', 'Андрей',
 
 const createComment = function(){
   return {
-    id: getRandomNum(1, 200),
+    id: getCommentID(),
     avatar: getURLofAvatar(),
     message: messages[getRandomNum(0, messages.length - 1)],
     name: getArrayOfNames[getRandomNum(0, messages.length - 1)]
