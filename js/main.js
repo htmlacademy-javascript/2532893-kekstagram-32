@@ -46,21 +46,25 @@ const getURLofAvatar = function(){
 // Массив имён пользователей
 const getArrayOfNames = ['Александр', 'Алексей', 'Андрей', 'Антон', 'Артём', 'Владимир', 'Вячеслав', 'Геннадий', 'Георгий', 'Дмитрий', 'Евгений', 'Иван', 'Илья', 'Кирилл', 'Максим', 'Михаил', 'Николай', 'Олег', 'Павел', 'Пётр', 'Роман', 'Сергей', 'Степан', 'Тимофей', 'Фёдор', 'Эдуард', 'Юрий', 'Александра', 'Алиса', 'Анастасия', 'Ангелина', 'Анна', 'Вероника', 'Виктория', 'Дарья', 'Екатерина', 'Елена', 'Елизавета', 'Ирина', 'Кристина', 'Ксения', 'Лариса', 'Марина', 'Мария', 'Надежда', 'Наталья', 'Ольга', 'Полина', 'Светлана', 'София', 'Татьяна', 'Юлия'];
 
+const createComment = function(){
+  return {
+    id: getRandomNum(1, 200),
+    avatar: getURLofAvatar(),
+    message: messages[getRandomNum(0, messages.length - 1)],
+    name: getArrayOfNames[getRandomNum(0, messages.length - 1)]
+  };
+
+};
+// console.log(createComment());
 
 // Массив объектов с комментариями
-const getArrayOfComments = function(min, max){
-  const arrayOfComments = [];
-  for (let i = 0; i < max; i++){
-    arrayOfComments.push({
-      id: getRandomNum(1, 200),
-      avatar: getURLofAvatar(),
-      message: messages[getRandomNum(0, messages.length - 1)],
-      name: getArrayOfNames[getRandomNum(0, messages.length - 1)]
-    });
-  }
-  return arrayOfComments;
+const getArrayOfComments = function(){
+  return Array.from({length: getRandomNum(0, 30)}, createComment);
 };
-// console.log(getArrayOfComments(0, 30));
+
+// console.log(getArrayOfComments());
+// console.log(getArrayOfComments());
+// console.log(getArrayOfComments());
 
 // Массив объектов
 const getArrayOfObjects = function(){
@@ -71,7 +75,7 @@ const getArrayOfObjects = function(){
       url: getArrayOfURL()[i],
       description: getArrayOfDescriptions[i],
       likes: getRandomNum(15, 200),
-      comments: getArrayOfComments(0, 30)[i]
+      comments: getArrayOfComments()
     });
   }
   return arrayOfObjects;
