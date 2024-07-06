@@ -1,5 +1,5 @@
-import { getRandomNum } from './utils';
-import { getArrayOfID, getArrayOfURL, getArrayOfDescriptions, getArrayOfComments, COUNT_OF_PHOTOS} from './data';
+import { getRandomNum } from './utils.js';
+import { getArrayOfID, getArrayOfURL, getArrayOfDescriptions, getArrayOfComments, COUNT_OF_PHOTOS} from './data.js';
 
 
 // Массив объектов
