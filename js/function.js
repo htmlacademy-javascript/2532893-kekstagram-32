@@ -8,7 +8,7 @@ const checkLength = (testingString, numberOfSymbols) =>
   testingString.length <= numberOfSymbols ? true : false;
 // eslint-disable-next-line no-console
 // console.log(checkLength('проверяемая строка', 10));
-
+checkLength('проверяемая строка', 10);
 /* Функция для проверки, является ли строка палиндромом */
 
 const isPalindrome = (testingString) => {
@@ -27,7 +27,7 @@ const isPalindrome = (testingString) => {
 // eslint-disable-next-line no-console
 // console.log(isPalindrome('Лёша на полке клопа нашёл '));
 
-
+isPalindrome('Лёша на полке клопа нашёл ');
 /* Функция принимает строку, извлекает содержащиеся в ней цифры от 0 до 9 и возвращает их в виде целого положительного числа. */
 
 const getNaturalNumbersFromString = function (str) {
@@ -49,7 +49,7 @@ const getNaturalNumbersFromString = function (str) {
 };
 // eslint-disable-next-line no-console
 // console.log(getNaturalNumbersFromString('00aa56a03-4'));
-
+getNaturalNumbersFromString('00aa56a03-4');
 
 // Module5-task2
 
@@ -68,3 +68,4 @@ const isTimingOK = (timeOfStartOfDay, timeOfEndOfDay, timeOfStartOfMeeting, dura
 // console.log(isTimingOK('08:00', '14:30', '14:00', 90)); // false
 // console.log(isTimingOK('14:00', '17:30', '08:0', 90)); // false
 // console.log(isTimingOK('8:00', '17:30', '08:00', 900)); // false
+isTimingOK('08:00', '17:30', '14:00', 90);
