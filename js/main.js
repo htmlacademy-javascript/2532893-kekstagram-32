@@ -1,3 +1,4 @@
 import { getArrayOfObjects } from './setup.js';
-console.log(`Массив объектов:
-  ${getArrayOfObjects()}`);
+import { generateThumbnails } from './thumbs.js';
+
+generateThumbnails(getArrayOfObjects());
