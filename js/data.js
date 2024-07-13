@@ -1,6 +1,10 @@
 import { getRandomNum, getUniqueID } from './utils.js';
 
 const COUNT_OF_PHOTOS = 25;
+const COMMENTS_MIN = 0;
+const COMMENTS_MAX = 30;
+const LIKES_MIN = 15;
+const LIKES_MAX = 200;
 
 const getCommentID = getUniqueID();
 
@@ -30,7 +34,7 @@ const getURLofAvatar = function(){
 };
 
 // Массив текстовых описаний фотографий
-const getArrayOfDescriptions = ['Пляж отеля', 'Указатель', 'Океан', 'Девушка на пляже', 'Мисо', 'Ламборгини', 'Клубника', 'Морс', 'Самолёт', 'Обувница', 'Яркое небо', 'Ауди', 'Салат', 'Суши-котик', 'Угги', 'Вид из самолёта', 'Оркестр', 'Ретро-авто', 'Тапочки с фонариком', 'Пальмы в отеле', 'Завтрак', 'Закат на Бали', 'Краб', 'Концерт', 'Сафари'];
+const arrayOfDescriptions = ['Пляж отеля', 'Указатель', 'Океан', 'Девушка на пляже', 'Мисо', 'Ламборгини', 'Клубника', 'Морс', 'Самолёт', 'Обувница', 'Яркое небо', 'Ауди', 'Салат', 'Суши-котик', 'Угги', 'Вид из самолёта', 'Оркестр', 'Ретро-авто', 'Тапочки с фонариком', 'Пальмы в отеле', 'Завтрак', 'Закат на Бали', 'Краб', 'Концерт', 'Сафари'];
 
 // Массив случайных комментариев
 const messages = ['Всё отлично!',
@@ -55,8 +59,8 @@ const createComment = function(){
 
 // Массив объектов с комментариями
 const getArrayOfComments = function(){
-  return Array.from({length: getRandomNum(0, 30)}, createComment);
+  return Array.from({length: getRandomNum(COMMENTS_MIN, COMMENTS_MAX)}, createComment);
 };
 
 
-export { getArrayOfID, getArrayOfURL, getArrayOfDescriptions, getArrayOfComments, COUNT_OF_PHOTOS };
+export { getArrayOfID, getArrayOfURL, arrayOfDescriptions, getArrayOfComments, COUNT_OF_PHOTOS, COMMENTS_MIN, COMMENTS_MAX, LIKES_MIN, LIKES_MAX };

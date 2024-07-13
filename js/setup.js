@@ -1,5 +1,6 @@
 import { getRandomNum } from './utils.js';
-import { getArrayOfID, getArrayOfURL, getArrayOfDescriptions, getArrayOfComments, COUNT_OF_PHOTOS} from './data.js';
+import { getArrayOfID, getArrayOfURL, arrayOfDescriptions, getArrayOfComments, COUNT_OF_PHOTOS, LIKES_MIN, LIKES_MAX} from './data.js';
+
 
 // Массив объектов
 const getArrayOfObjects = function(){
@@ -8,8 +9,8 @@ const getArrayOfObjects = function(){
     arrayOfObjects.push({
       id: getArrayOfID()[i],
       url: getArrayOfURL()[i],
-      description: getArrayOfDescriptions[i],
-      likes: getRandomNum(15, 200),
+      description: arrayOfDescriptions[i],
+      likes: getRandomNum(LIKES_MIN, LIKES_MAX),
       comments: getArrayOfComments()
     });
   }
