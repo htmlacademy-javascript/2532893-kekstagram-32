@@ -23,7 +23,7 @@ const showFullSizeImages = (pictures) => {
       likesCount.textContent = thumb.likes;
       socialCommentShownCount.textContent = 2;
       socialCommentTotalCount.textContent = thumb.comments.length;
-      socialCaption.textContent = thumb.description;
+      socialCaption.textContent = evt.target.alt;
       socialCommentsCount.classList.add('hidden');
       commentLoader.classList.add('hidden');
       document.body.classList.add('modal-open');
