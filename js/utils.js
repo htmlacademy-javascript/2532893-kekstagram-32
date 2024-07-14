@@ -13,5 +13,10 @@ function getUniqueID(){
   };
 }
 
+function closeModal(element){
+  element.classList.add('hidden');
+}
 
-export { getRandomNum, getUniqueID };
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export { getRandomNum, getUniqueID, closeModal, isEscapeKey };
