@@ -17,6 +17,8 @@ function closeModal(element){
   element.classList.add('hidden');
 }
 
-const isEscapeKey = (evt) => evt.keyCode === 27;
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export { getRandomNum, getUniqueID, closeModal, isEscapeKey };
+const isHidden = (element) => element.classList.contains('hidden');
+
+export { getRandomNum, getUniqueID, closeModal, isEscapeKey, isHidden };
