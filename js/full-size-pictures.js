@@ -34,6 +34,7 @@ const showFullSizeImages = (pictures) => {
 };
 
 closeButton.addEventListener('click', () => closeModal(picture));
+
 document.addEventListener('keydown', (evt) => {
   if (isEscapeKey) {
     evt.preventDefault();
