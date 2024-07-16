@@ -34,7 +34,7 @@ function fillListener(pictures) {
 
 const onClickClosing = () => closeButton.addEventListener('click', () => closeModal(picture));
 
-const onESCclosing = () => document.addEventListener('keydown', (evt) => {
+const onESCclosing123 = () => document.addEventListener('keydown', (evt) => {
   if (isEscapeKey) {
     evt.preventDefault();
     closeModal(picture);
