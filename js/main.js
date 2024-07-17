@@ -1,17 +1,14 @@
-import { getArrayOfObjects } from './setup.js';
-import { generateThumbnails } from './thumbs.js';
-import { showFullSizeImages } from './full-size-pictures.js';
+import { photos } from './setup.js';
+import { container, generateThumbnails } from './thumbs.js';
+import { openBigPicture } from './full-size-pictures.js';
 
 
-generateThumbnails(getArrayOfObjects());
-showFullSizeImages(getArrayOfObjects());
+generateThumbnails(photos);
 
-// Не работает
+container.addEventListener('click', (evt) => {
+  const currentPhoto = evt.target.closest('.picture');
 
-// 1. Тексты комментариев одинаковые, то есть при вызове функции - генератора одно значение присваивается всем элементам с комментариями
-
-// 2. Утилити функция проверки клавиши Escape не работает - окно закрывается от любой клавиши
-
-// Дополнительно
-
-// 3. Добавил закрытие модального окна по клику вне области, в задании нет, но вещь удобная
+  if (currentPhoto) {
+    openBigPicture(currentPhoto.dataset.pictureId);
+  }
+});
