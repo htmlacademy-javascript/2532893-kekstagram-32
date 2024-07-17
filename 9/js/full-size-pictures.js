@@ -6,9 +6,12 @@ const likesCount = document.querySelector('.likes-count');
 const socialComments = document.querySelector('.social__comments');
 const socialCommentTemplate = document.querySelector('.social__comment');
 const socialCaption = document.querySelector('.social__caption');
+const socialCommentsShownCount = document.querySelector('.social__comment-shown-count');
+const socialCommentsTotalCount = document.querySelector('.social__comment-total-count');
 const socialCommentsCount = document.querySelector('.social__comment-count');
 const socialCommentsLoader = document.querySelector('.comments-loader');
 const bigPictureCancelButton = document.querySelector('.big-picture__cancel');
+const quantityOfShownComments = countShowComments();
 
 const onBigPictureCancelClick = () => {
   closeBigPicture();
@@ -32,6 +35,8 @@ const openBigPicture = (pictureId) => {
 
   bigPictureImg.src = currentPicture.url;
   likesCount.textContent = currentPicture.likes;
+  socialCommentsTotalCount.textContent = currentPicture.comments.length;
+  socialCommentsShownCount.textContent = quantityOfShownComments;
   socialComments.innerHTML = '';
 
   currentPicture.comments.forEach((comment) => {
@@ -40,7 +45,6 @@ const openBigPicture = (pictureId) => {
     socialComment.querySelector('.social__picture').src = comment.avatar;
     socialComment.querySelector('.social__picture').alt = comment.name;
     socialComment.querySelector('.social__text').textContent = comment.message;
-
     socialCommentsFragment.appendChild(socialComment);
   });
   socialComments.appendChild(socialCommentsFragment);
@@ -53,5 +57,10 @@ const openBigPicture = (pictureId) => {
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onEscKeyClick);
 };
+
+function countShowComments () {
+
+  return socialComments.children.length;
+}
 
 export { openBigPicture };
