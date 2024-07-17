@@ -16,5 +16,6 @@ const getArrayOfObjects = function(){
   }
   return arrayOfObjects;
 };
+const photos = getArrayOfObjects();
 
-export {getArrayOfObjects};
+export {photos};
