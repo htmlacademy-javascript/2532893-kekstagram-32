@@ -1,7 +1,7 @@
 import { photos } from './setup.js';
 import { container } from './thumbs.js';
 import { isHidden } from './utils.js';
-// import { comments } from './data.js';
+import { COUNT_OF_SHOWN_COMMENTS } from './data.js';
 
 // const picture = document.querySelector('.picture');
 const bigPicture = document.querySelector('.big-picture');
@@ -41,10 +41,16 @@ const fullSizePictures = () => {
           socialText.textContent = comment.message;
 
           socialCommentsFragment.append(socialComment);
+
+
         });
         socialComments.appendChild(socialCommentsFragment);
-        socialCommentsCount.classList.add('hidden');
-        socialCommentsLoader.classList.add('hidden');
+
+        for (let j = socialComments.length; j > COUNT_OF_SHOWN_COMMENTS; j--){
+          socialComments[j].classList.add('hidden');
+        }
+        // socialCommentsCount.classList.add('hidden');
+        // socialCommentsLoader.classList.add('hidden');
       }
     }
     document.addEventListener('keydown', onEscapeCloseModal);

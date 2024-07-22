@@ -5,6 +5,7 @@ const COMMENTS_MIN = 0;
 const COMMENTS_MAX = 30;
 const LIKES_MIN = 15;
 const LIKES_MAX = 200;
+const COUNT_OF_SHOWN_COMMENTS = 5;
 
 const getCommentID = getUniqueID();
 
@@ -64,4 +65,4 @@ const getArrayOfComments = function(){
 const comments = getArrayOfComments();
 
 
-export { getArrayOfID, getArrayOfURL, arrayOfDescriptions, getArrayOfComments, COUNT_OF_PHOTOS, COMMENTS_MIN, COMMENTS_MAX, LIKES_MIN, LIKES_MAX, createComment, comments };
+export { getArrayOfID, getArrayOfURL, arrayOfDescriptions, getArrayOfComments, COUNT_OF_PHOTOS, COMMENTS_MIN, COMMENTS_MAX, LIKES_MIN, LIKES_MAX, createComment, comments, COUNT_OF_SHOWN_COMMENTS };
