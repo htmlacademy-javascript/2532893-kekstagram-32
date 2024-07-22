@@ -21,6 +21,7 @@ const overlayPicture = document.querySelector('.overlay');
 
 const fullSizePictures = () => {
   container.addEventListener('click', (evt) => {
+    document.body.classList.add('modal-open');
     bigPicture.classList.remove('hidden');
     for (let i = 0; i < photos.length; i++) {
       if (evt.target.src.includes(photos[i].url)) {
@@ -52,6 +53,7 @@ const fullSizePictures = () => {
 
     if (isHidden(bigPicture)) {
       bigPictureCancelButton.removeEventListener('click', onClickCloseModal);
+
     }
   });
 };
@@ -59,12 +61,14 @@ const fullSizePictures = () => {
 function onClickCloseModal(evt) {
   evt.preventDefault();
   bigPicture.classList.add('hidden');
+  document.body.classList.remove('modal-open');
 }
 
 function onEscapeCloseModal(evt) {
   evt.preventDefault();
   if (evt.key === 'Escape') {
     bigPicture.classList.add('hidden');
+    document.body.classList.remove('modal-open');
   }
   // if (isEscapeKey()) {
   //   bigPicture.classList.add('hidden');
@@ -74,6 +78,7 @@ function onLeftClickCloseModal(evt) {
   evt.preventDefault();
   if (evt.target === overlayPicture) {
     bigPicture.classList.add('hidden');
+    document.body.classList.remove('modal-open');
   }
 
 }
