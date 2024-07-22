@@ -1,9 +1,8 @@
 import { photos } from './setup.js';
 import { container } from './thumbs.js';
 import { isHidden } from './utils.js';
-// import { comments } from './data.js';
 
-// const picture = document.querySelector('.picture');
+
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = document.querySelector('.big-picture__img').querySelector('img');
 const likesCount = document.querySelector('.likes-count');
