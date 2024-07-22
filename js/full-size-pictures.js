@@ -21,6 +21,7 @@ const socialCommentTemplate = document.querySelector('.social__comment');
 const overlayPicture = document.querySelector('.overlay');
 
 const fullSizePictures = () => {
+  document.body.classList.add('modal-open');
   container.addEventListener('click', (evt) => {
     bigPicture.classList.remove('hidden');
     for (let i = 0; i < photos.length; i++) {
@@ -66,12 +67,14 @@ const fullSizePictures = () => {
 function onClickCloseModal(evt) {
   evt.preventDefault();
   bigPicture.classList.add('hidden');
+  document.body.classList.remove('modal-open');
 }
 
 function onEscapeCloseModal(evt) {
   evt.preventDefault();
   if (evt.key === 'Escape') {
     bigPicture.classList.add('hidden');
+    document.body.classList.remove('modal-open');
   }
   // if (isEscapeKey()) {
   //   bigPicture.classList.add('hidden');
@@ -81,6 +84,7 @@ function onLeftClickCloseModal(evt) {
   evt.preventDefault();
   if (evt.target === overlayPicture) {
     bigPicture.classList.add('hidden');
+    document.body.classList.remove('modal-open');
   }
 
 }
