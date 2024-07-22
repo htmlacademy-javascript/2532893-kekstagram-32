@@ -61,6 +61,7 @@ const createComment = function(){
 const getArrayOfComments = function(){
   return Array.from({length: getRandomNum(COMMENTS_MIN, COMMENTS_MAX)}, createComment);
 };
+const comments = getArrayOfComments();
 
 
-export { getArrayOfID, getArrayOfURL, arrayOfDescriptions, getArrayOfComments, COUNT_OF_PHOTOS, COMMENTS_MIN, COMMENTS_MAX, LIKES_MIN, LIKES_MAX, createComment };
+export { getArrayOfID, getArrayOfURL, arrayOfDescriptions, getArrayOfComments, COUNT_OF_PHOTOS, COMMENTS_MIN, COMMENTS_MAX, LIKES_MIN, LIKES_MAX, createComment, comments };

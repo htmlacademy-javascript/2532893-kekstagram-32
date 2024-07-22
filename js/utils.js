@@ -13,12 +13,9 @@ function getUniqueID(){
   };
 }
 
-function closeModal(element){
-  element.classList.add('hidden');
-}
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const isHidden = (element) => element.classList.contains('hidden');
 
-export { getRandomNum, getUniqueID, closeModal, isEscapeKey, isHidden };
+export { getRandomNum, getUniqueID, isEscapeKey, isHidden };
