@@ -1,7 +1,7 @@
 import { photos } from './setup.js';
 import { container } from './thumbs.js';
 import { isHidden } from './utils.js';
-
+import { COUNT_OF_SHOWN_COMMENTS } from './data.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = document.querySelector('.big-picture__img').querySelector('img');
@@ -17,11 +17,17 @@ const socialPicture = document.querySelector('.social__picture');
 const socialText = document.querySelector('.social__text');
 const socialComments = document.querySelector('.social__comments');
 const socialCommentTemplate = document.querySelector('.social__comment');
+const socialCommentsItems = document.querySelectorAll('.social__comment');
 const overlayPicture = document.querySelector('.overlay');
 
+for (const item of photos) {
+  // console.log(item.comments);
+}
+
+
 const fullSizePictures = () => {
+  document.body.classList.add('modal-open');
   container.addEventListener('click', (evt) => {
-    document.body.classList.add('modal-open');
     bigPicture.classList.remove('hidden');
     for (let i = 0; i < photos.length; i++) {
       if (evt.target.src.includes(photos[i].url)) {
@@ -32,19 +38,25 @@ const fullSizePictures = () => {
         socialCaption.textContent = photos[i].description;
         socialComments.innerHTML = '';
         const socialCommentsFragment = document.createDocumentFragment();
-        photos[i].comments.forEach((comment) => {
+        // console.log(photos[i].comments);
 
+
+        for (let j = 0; j < photos[i].comments.length; j++) {
           const socialComment = socialCommentTemplate.cloneNode(true);
+          socialComment.querySelector('.social__picture').src = photos[i].comments[j].avatar;
 
-          socialPicture.src = comment.avatar;
-          socialPicture.alt = comment.name;
-          socialText.textContent = comment.message;
-
+          // console.log(photos[i].comments[j].avatar);
+          socialComment.querySelector('.social__picture').alt = photos[i].comments[j].name;
+          // console.log(photos[i].comments[j].name);
+          socialComment.querySelector('.social__text').textContent = photos[i].comments[j].message;
+          // console.log(photos[i].comments[j].message);
           socialCommentsFragment.append(socialComment);
-        });
-        socialComments.appendChild(socialCommentsFragment);
-        socialCommentsCount.classList.add('hidden');
-        socialCommentsLoader.classList.add('hidden');
+        }
+        //  console.log(socialPicture)
+
+
+        socialComments.append(socialCommentsFragment);
+
       }
     }
     document.addEventListener('keydown', onEscapeCloseModal);
@@ -53,7 +65,6 @@ const fullSizePictures = () => {
 
     if (isHidden(bigPicture)) {
       bigPictureCancelButton.removeEventListener('click', onClickCloseModal);
-
     }
   });
 };
