@@ -5,6 +5,7 @@ const COMMENTS_MIN = 0;
 const COMMENTS_MAX = 30;
 const LIKES_MIN = 15;
 const LIKES_MAX = 200;
+const COUNT_OF_SHOWN_COMMENTS = 5;
 
 const getCommentID = getUniqueID();
 
@@ -45,14 +46,14 @@ const messages = ['Всё отлично!',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 
 // Массив имён пользователей
-const getArrayOfNames = ['Александр', 'Алексей', 'Андрей', 'Антон', 'Артём', 'Владимир', 'Вячеслав', 'Геннадий', 'Георгий', 'Дмитрий', 'Евгений', 'Иван', 'Илья', 'Кирилл', 'Максим', 'Михаил', 'Николай', 'Олег', 'Павел', 'Пётр', 'Роман', 'Сергей', 'Степан', 'Тимофей', 'Фёдор', 'Эдуард', 'Юрий', 'Александра', 'Алиса', 'Анастасия', 'Ангелина', 'Анна', 'Вероника', 'Виктория', 'Дарья', 'Екатерина', 'Елена', 'Елизавета', 'Ирина', 'Кристина', 'Ксения', 'Лариса', 'Марина', 'Мария', 'Надежда', 'Наталья', 'Ольга', 'Полина', 'Светлана', 'София', 'Татьяна', 'Юлия'];
+const names = ['Александр', 'Алексей', 'Андрей', 'Антон', 'Артём', 'Владимир', 'Вячеслав', 'Геннадий', 'Георгий', 'Дмитрий', 'Евгений', 'Иван', 'Илья', 'Кирилл', 'Максим', 'Михаил', 'Николай', 'Олег', 'Павел', 'Пётр', 'Роман', 'Сергей', 'Степан', 'Тимофей', 'Фёдор', 'Эдуард', 'Юрий', 'Александра', 'Алиса', 'Анастасия', 'Ангелина', 'Анна', 'Вероника', 'Виктория', 'Дарья', 'Екатерина', 'Елена', 'Елизавета', 'Ирина', 'Кристина', 'Ксения', 'Лариса', 'Марина', 'Мария', 'Надежда', 'Наталья', 'Ольга', 'Полина', 'Светлана', 'София', 'Татьяна', 'Юлия'];
 
 const createComment = function(){
   return {
     id: getCommentID(),
     avatar: getURLofAvatar(),
     message: messages[getRandomNum(0, messages.length - 1)],
-    name: getArrayOfNames[getRandomNum(0, messages.length - 1)]
+    name: names[getRandomNum(0, names.length - 1)]
   };
 
 };
@@ -64,4 +65,4 @@ const getArrayOfComments = function(){
 const comments = getArrayOfComments();
 
 
-export { getArrayOfID, getArrayOfURL, arrayOfDescriptions, getArrayOfComments, COUNT_OF_PHOTOS, COMMENTS_MIN, COMMENTS_MAX, LIKES_MIN, LIKES_MAX, createComment, comments };
+export { getArrayOfID, getArrayOfURL, arrayOfDescriptions, getArrayOfComments, COUNT_OF_PHOTOS, COMMENTS_MIN, COMMENTS_MAX, LIKES_MIN, LIKES_MAX, createComment, comments, COUNT_OF_SHOWN_COMMENTS };
