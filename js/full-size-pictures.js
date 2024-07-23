@@ -18,7 +18,13 @@ const socialPicture = document.querySelector('.social__picture');
 const socialText = document.querySelector('.social__text');
 const socialComments = document.querySelector('.social__comments');
 const socialCommentTemplate = document.querySelector('.social__comment');
+const socialCommentsItems = document.querySelectorAll('.social__comment');
 const overlayPicture = document.querySelector('.overlay');
+
+for (const item of photos) {
+  // console.log(item.comments);
+}
+
 
 const fullSizePictures = () => {
   document.body.classList.add('modal-open');
@@ -33,25 +39,25 @@ const fullSizePictures = () => {
         socialCaption.textContent = photos[i].description;
         socialComments.innerHTML = '';
         const socialCommentsFragment = document.createDocumentFragment();
-        photos[i].comments.forEach((comment) => {
+        // console.log(photos[i].comments);
 
+
+        for (let j = 0; j < photos[i].comments.length; j++) {
           const socialComment = socialCommentTemplate.cloneNode(true);
+          socialComment.querySelector('.social__picture').src = photos[i].comments[j].avatar;
 
-          socialPicture.src = comment.avatar;
-          socialPicture.alt = comment.name;
-          socialText.textContent = comment.message;
-
+          // console.log(photos[i].comments[j].avatar);
+          socialComment.querySelector('.social__picture').alt = photos[i].comments[j].name;
+          // console.log(photos[i].comments[j].name);
+          socialComment.querySelector('.social__text').textContent = photos[i].comments[j].message;
+          // console.log(photos[i].comments[j].message);
           socialCommentsFragment.append(socialComment);
-
-
-        });
-        socialComments.appendChild(socialCommentsFragment);
-
-        for (let j = socialComments.length; j > COUNT_OF_SHOWN_COMMENTS; j--){
-          socialComments[j].classList.add('hidden');
         }
-        // socialCommentsCount.classList.add('hidden');
-        // socialCommentsLoader.classList.add('hidden');
+        //  console.log(socialPicture)
+
+
+        socialComments.append(socialCommentsFragment);
+
       }
     }
     document.addEventListener('keydown', onEscapeCloseModal);
