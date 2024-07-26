@@ -11,16 +11,13 @@ const socialCommentsTotalCount = document.querySelector('.social__comment-total-
 const socialCommentsCount = document.querySelector('.social__comment-count');
 const socialCommentsLoader = document.querySelector('.comments-loader');
 const bigPictureCancelButton = document.querySelector('.big-picture__cancel');
+const quantityOfShownComments = countShowComments();
 
+const onBigPictureCancelClick = () => {
+  closeBigPicture();
+};
 
-function onClickCloseModal(evt) {
-  evt.preventDefault();
-  bigPicture.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-}
-
-function onEscapeCloseModal(evt) {
-  evt.preventDefault();
+const onEscKeyClick = (evt) => {
   if (evt.key === 'Escape') {
     closeBigPicture();
   }
@@ -39,7 +36,7 @@ const openBigPicture = (pictureId) => {
   bigPictureImg.src = currentPicture.url;
   likesCount.textContent = currentPicture.likes;
   socialCommentsTotalCount.textContent = currentPicture.comments.length;
-  socialCommentsShownCount.textContent = currentPicture.comments.length;
+  socialCommentsShownCount.textContent = quantityOfShownComments;
   socialComments.innerHTML = '';
 
   currentPicture.comments.forEach((comment) => {
@@ -61,5 +58,9 @@ const openBigPicture = (pictureId) => {
   document.addEventListener('keydown', onEscKeyClick);
 };
 
+function countShowComments () {
+
+  return socialComments.children.length;
+}
 
 export { openBigPicture };
