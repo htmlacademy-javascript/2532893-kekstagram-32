@@ -24,9 +24,10 @@ const createPhotos = (index) => ({
     createComments)
 });
 
-const photos = Array.from(
+const getPhotos = () => Array.from(
   { length: COUNT_OF_PHOTOS },
   (_, index) => createPhotos(index));
 
+const photos = getPhotos();
 
 export { photos };
