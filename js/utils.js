@@ -1,17 +1,23 @@
-const getRandomNum = (min, max) => {
-  const lower = Math.ceil(Math.min(min, max));
-  const upper = Math.floor(Math.max(min, max));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
+// Модуль вспомогательных функций
 
-function getUniqueID(){
-  let uniqueID = 0;
-  return function(){
-    uniqueID += 1;
-    return uniqueID;
-  };
+function generateRandomInteger(firstInt, secondInt) {
+  const min = Math.ceil(Math.min(firstInt, secondInt));
+  const max = Math.floor(Math.max(firstInt, secondInt));
+  return Math.ceil(Math.random() * (max - min)) + min - 1;
 }
 
+function generateUniqueID() {
+  let id = 1;
+  return function () {
+    return id++;
+  };
+}
+const uniqueID = generateUniqueID();
 
-export { getRandomNum, getUniqueID };
+function getRandomIndex(arr) {
+  return generateRandomInteger(0, arr.length - 1);
+}
+
+export { generateRandomInteger, uniqueID, getRandomIndex };
+
+
