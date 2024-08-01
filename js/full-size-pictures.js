@@ -76,7 +76,6 @@ function renderComments() {
       socialCommentsLoader.classList.add('hidden');
     }
     if (i >= currentPicture.comments.length) {
-      socialCommentsLoader.classList.add('hidden');
       break;
 
 
