@@ -58,6 +58,7 @@ function createComment({avatar, name, message}) {
   socialComment.querySelector('.social__picture').src = avatar;
   socialComment.querySelector('.social__picture').alt = name;
   socialComment.querySelector('.social__text').textContent = message;
+
   return socialComment;
 }
 function renderComments() {
