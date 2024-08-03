@@ -15,6 +15,7 @@ imgUploadInput.addEventListener('change', () => {
 document.querySelector('.img-upload__cancel').addEventListener('click', () => {
   document.querySelector('.img-upload__overlay').classList.add('hidden');
   document.body.classList.remove('modal-open');
+  imgUploadInput.value = '';
 });
 
 document.addEventListener('keydown', (evt) => {
@@ -22,6 +23,7 @@ document.addEventListener('keydown', (evt) => {
     evt.preventDefault();
     document.querySelector('.img-upload__overlay').classList.add('hidden');
     document.body.classList.remove('modal-open');
+    imgUploadInput.value = '';
   }
 
 });
