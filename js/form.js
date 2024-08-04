@@ -13,6 +13,8 @@ const uploadForm = document.querySelector('.img-upload__form');
 const hashTagsField = uploadForm.querySelector('.text__hashtags');
 const commentField = uploadForm.querySelector('.text__description');
 const isFieldInFocus = () => document.activeElement === hashTagsField || document.activeElement === commentField;
+const slider = document.querySelector('.effect-level__slider');
+const sliderContainer = document.querySelector('.img-upload__effect-level');
 // const hashtags = hashTagsField.value.split(' '); - - не работает
 
 
@@ -20,12 +22,16 @@ const isFieldInFocus = () => document.activeElement === hashTagsField || documen
 imgUploadInput.addEventListener('change', () => {
   document.querySelector('.img-upload__overlay').classList.remove('hidden');
   document.body.classList.add('modal-open');
+  document.querySelector('#effect-none').checked = true;
+  slider.classList.add('hidden');
+  sliderContainer.classList.add('hidden');
 });
 
 document.querySelector('.img-upload__cancel').addEventListener('click', () => {
   document.querySelector('.img-upload__overlay').classList.add('hidden');
   document.body.classList.remove('modal-open');
   imgUploadInput.value = '';
+  document.querySelector('.img-upload__preview img').style.filter = '';
 });
 
 document.addEventListener('keydown', (evt) => {
@@ -35,6 +41,7 @@ document.addEventListener('keydown', (evt) => {
     document.querySelector('.img-upload__overlay').classList.add('hidden');
     document.body.classList.remove('modal-open');
     imgUploadInput.value = '';
+    document.querySelector('.img-upload__preview img').style.filter = '';
   }
 
 });
