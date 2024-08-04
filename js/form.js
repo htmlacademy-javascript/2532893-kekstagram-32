@@ -1,15 +1,18 @@
 // Постоянные константы из ТЗ
 const HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTAG_COUNT = 5;
-const HASHTAGS_ERROR_TEXT = 'Ошибка при вводе хэштегов';
+const HASHTAGS_ERROR_SYMBOLS_TEXT = 'Введён невалидный хэштег';
+const HASHTAGS_ERROR_QUANTITY_TEXT = 'Превышено количество хэштегов';
+const HASHTAGS_ERROR_UNIQUE_TEXT = 'Хэштеги повторяются';
 const MAX_COMMENT_SYMBOLS = 140;
-const COMMENT_ERROR_TEXT = 'Ошибка при вводе комментария, превышено максимальное количество символов (140)';
+const COMMENT_ERROR_TEXT = 'Длина комментария больше 140 символов';
 
 // Поиск элементов
 const imgUploadInput = document.querySelector('.img-upload__input');
 const uploadForm = document.querySelector('.img-upload__form');
 const hashTagsField = uploadForm.querySelector('.text__hashtags');
 const commentField = uploadForm.querySelector('.text__description');
+const isFieldInFocus = () => document.activeElement === hashTagsField || document.activeElement === commentField;
 // const hashtags = hashTagsField.value.split(' '); - - не работает
 
 
@@ -26,7 +29,8 @@ document.querySelector('.img-upload__cancel').addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
+
+  if (evt.key === 'Escape' && !isFieldInFocus()) {
     evt.preventDefault();
     document.querySelector('.img-upload__overlay').classList.add('hidden');
     document.body.classList.remove('modal-open');
@@ -41,7 +45,7 @@ const pristine = new Pristine(uploadForm, {
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error'
 },
-false);
+true);
 
 // Валидация хэштегов
 
@@ -70,17 +74,17 @@ const areHashtagsUnique = () => createSetOfHashtags().size === hashTagsField.val
 pristine.addValidator(
   hashTagsField,
   areHashtagSymbolsValid,
-  HASHTAGS_ERROR_TEXT);
+  HASHTAGS_ERROR_SYMBOLS_TEXT);
 
 pristine.addValidator(
   hashTagsField,
   areHashtagsQuantityValid,
-  HASHTAGS_ERROR_TEXT);
+  HASHTAGS_ERROR_QUANTITY_TEXT);
 
 pristine.addValidator(
   hashTagsField,
   areHashtagsUnique,
-  HASHTAGS_ERROR_TEXT);
+  HASHTAGS_ERROR_UNIQUE_TEXT);
 
 // Валидация комментариев
 const areCommentValid = () => commentField.value.length <= MAX_COMMENT_SYMBOLS;
@@ -92,8 +96,8 @@ pristine.addValidator(
 );
 
 
-uploadForm.addEventListener('submit', () => {
-  // evt.preventDefault();
+uploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
   pristine.validate(); // непонятно что с отправкой формы
 });
 
