@@ -1,8 +1,8 @@
-import { photos } from './setup.js';
+// import { photos } from './setup.js';
 
 const bigPicture = document.querySelector('.big-picture');
-const bigPictureImg = document.querySelector('.big-picture__img img');
-const likesCount = document.querySelector('.likes-count');
+// const bigPictureImg = document.querySelector('.big-picture__img img');
+// const likesCount = document.querySelector('.likes-count');
 const socialComments = document.querySelector('.social__comments');
 const socialCommentTemplate = document.querySelector('.social__comment');
 const socialCaption = document.querySelector('.social__caption');
@@ -14,7 +14,7 @@ const bigPictureCancelButton = document.querySelector('.big-picture__cancel');
 let commentsShown = 0;
 const comments = [];
 const COMMENTS_STEP = 5;
-let currentPicture = null;
+// const currentPicture = null;
 
 const onBigPictureCancelClick = () => {
   closeBigPicture();
@@ -40,17 +40,6 @@ function hideBigPicture() {
   commentsShown = 0;
 }
 
-const openBigPicture = (pictureId) => {
-  currentPicture = photos.find((photo) => photo.id === Number(pictureId));
-
-
-  bigPictureImg.src = currentPicture.url;
-  likesCount.textContent = currentPicture.likes;
-
-  renderComments(currentPicture);
-
-
-};
 
 function createComment({avatar, name, message}) {
   const socialComment = socialCommentTemplate.cloneNode(true);
@@ -61,8 +50,7 @@ function createComment({avatar, name, message}) {
 
   return socialComment;
 }
-function renderComments() {
-
+const renderComments = (currentPicture) => {
   if (commentsShown >= currentPicture.comments.length) {
     socialCommentsLoader.classList.add('hidden');
     commentsShown = comments.length;
@@ -96,7 +84,8 @@ function renderComments() {
   bigPictureCancelButton.addEventListener('click', onBigPictureCancelClick);
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onEscKeyClick);
-}
-socialCommentsLoader.addEventListener('click', renderComments);
+};
+socialCommentsLoader.addEventListener('click', () => renderComments());
 
-export { openBigPicture };
+
+export { renderComments };
