@@ -85,7 +85,7 @@ const renderComments = (currentPicture) => {
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onEscKeyClick);
 };
-socialCommentsLoader.addEventListener('click', () => renderComments());
+
 
 
 export { renderComments };
