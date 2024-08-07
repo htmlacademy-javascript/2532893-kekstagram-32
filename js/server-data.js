@@ -1,9 +1,11 @@
+// Не получился вывод ошибки
+
 import { generateThumbnails } from './thumbs.js';
 import { renderComments } from './full-size-pictures.js';
 import { container } from './thumbs.js';
 
 // КОнстанта
-const REMOTE_URL = 'https://32.javascript.htmlacademy.pro/kekstagram/data';
+const REMOTE_GET_URL = 'https://32.javascript.htmlacademy.pro/kekstagram/data';
 
 // Поиск элементов
 const bigPictureImg = document.querySelector('.big-picture__img img');
@@ -14,7 +16,7 @@ let currentPicture;
 
 // Шаблон ошибки
 const errorMessageTemplate = document.querySelector('#data-error').content;
-const errorMessage = document.querySelector('.data-error__title');
+// const errorMessage = document.querySelector('.data-error__title');
 
 const showErrorMessage = () => {
   const errorMessageElement = errorMessageTemplate.cloneNode(true);
@@ -35,25 +37,21 @@ const openBigPicture = (data, pictureId) => {
 
 // Запрос фото с сервера и отрисовка
 const renderRemoteThumbnails = () => {
-  fetch(REMOTE_URL).then((response) => response.json()).then((data) => generateThumbnails(data));
+  fetch(REMOTE_GET_URL).then((response) => response.json()).then((data) => generateThumbnails(data));
 };
 
 
 const renderRemotePhotos = (pictureId) => {
-  fetch(REMOTE_URL)
+  fetch(REMOTE_GET_URL)
     .then((response) => {
       if (response.ok) {
         return response;
-      } else {
-        // showErrorMessage();
-        throw new Error(errorMessage);
-
       }
 
     })
     .then((response) => response.json())
     .then((data) => openBigPicture (data, pictureId))
-    .catch((error) => console.log(error));
+    .catch(() => showErrorMessage());
 
 };
 socialCommentsLoader.addEventListener('click', () => renderComments(currentPicture));
