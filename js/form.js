@@ -24,14 +24,14 @@ const sliderContainer = document.querySelector('.img-upload__effect-level');
 
 
 // Открытие и закрытие формы редактирования изображения
-const openForm = () => {
-  document.querySelector('.img-upload__overlay').classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  document.querySelector('#effect-none').checked = true;
-  slider.classList.add('hidden');
-  sliderContainer.classList.add('hidden');
-};
-imgUploadInput.addEventListener('change', openForm);
+// const openForm = () => {
+//   document.querySelector('.img-upload__overlay').classList.remove('hidden');
+//   document.body.classList.add('modal-open');
+//   document.querySelector('#effect-none').checked = true;
+//   slider.classList.add('hidden');
+//   sliderContainer.classList.add('hidden');
+// };
+// imgUploadInput.addEventListener('change', openForm);
 
 const closeForm = () => {
   document.querySelector('.img-upload__overlay').classList.add('hidden');

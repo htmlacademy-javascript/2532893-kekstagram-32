@@ -7,6 +7,7 @@ import './scale-control.js';
 import './server-data.js';
 import { renderRemoteThumbnails, openCard } from './server-data.js';
 import { submitForm, closeForm } from './form.js';
+import './user-photo.js';
 
 renderRemoteThumbnails();
 openCard();
