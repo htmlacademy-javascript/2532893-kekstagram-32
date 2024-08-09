@@ -120,12 +120,22 @@ const successMessage = document.querySelector('#success').content;
 const unsuccessMessage = document.querySelector('#error').content;
 const closeUnsuccessMessage = () => document.querySelector('.error').classList.add('hidden');
 
+const submitButton = document.querySelector('#upload-submit');
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Отправляю...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+};
 
 function submitForm(successCallback) {
   uploadForm.addEventListener('submit', (evt) => {
 
     evt.preventDefault();
     if (pristine.validate()) {
+      blockSubmitButton();
       const formData = new FormData(uploadForm);
       fetch(REMOTE_SUBMIT_URL, {
         method: 'POST',
@@ -134,7 +144,8 @@ function submitForm(successCallback) {
       }).then(() => successCallback())
 
         .then(() => hideSuccessMessage(formData))
-        .catch(() => hideUnsuccessMessage(formData));
+        .catch(() => hideUnsuccessMessage(formData))
+        .finally(unblockSubmitButton());
     } else {
       hideUnsuccessMessage();
     }
