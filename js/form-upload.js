@@ -54,15 +54,17 @@ function submitForm(successCallback) {
         method: 'POST',
         body: formData
       })
-        .then(successCallback)
-        .then(showSuccessMessage())
-        .then(hideSuccessMessage());
+        .then((response) => {
+          if (response.ok) {
+            successCallback(),
+            showSuccessMessage(),
+            hideSuccessMessage();
+          }
+        });
+      // .then(hideSuccessMessage());
     }
   });
 }
-
-
-
 
 
 export { submitForm };
