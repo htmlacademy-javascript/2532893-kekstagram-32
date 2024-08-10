@@ -6,11 +6,18 @@ const commentField = uploadForm.querySelector('.text__description');
 const successMessage = document.querySelector('#success').content;
 const successMessageModal = successMessage.querySelector('.success');
 const unsuccessMessage = document.querySelector('#error').content;
-const closeUnsuccessMessage = () => document.querySelector('.error').classList.add('hidden');
+const unsuccessMessageModal = unsuccessMessage.querySelector('.error');
+
 
 const renderSuccessModal = () => {
   document.body.append(successMessage);
   successMessageModal.classList.add('hidden');
+};
+
+const renderUnsuccessModal = () => {
+  document.body.append(unsuccessMessage);
+  unsuccessMessageModal.classList.add('hidden');
+
 };
 
 
@@ -26,14 +33,14 @@ const closeForm = () => {
 
 function hideUnsuccessMessage() {
 
-  document.querySelector('.error__button').addEventListener('click', closeUnsuccessMessage);
+  unsuccessMessageModal.addEventListener('click', closeUnsuccessMessage);
 
-  document.body.addEventListener('keydown', (evt) => {
+  unsuccessMessageModal.addEventListener('keydown', (evt) => {// доделать закрытие модального окна без закрытия формы
     if (evt.key === 'Escape') {
       closeUnsuccessMessage();
     }
   });
-  document.addEventListener('click', (evt) => {
+  unsuccessMessageModal.addEventListener('click', (evt) => {
     if (!evt.target.closest('.error__inner')) {
       closeUnsuccessMessage();
     }
@@ -67,5 +74,12 @@ function closeSuccessMessage() {
   successMessageModal.classList.add('hidden');
 }
 
+function closeUnsuccessMessage() {
+  unsuccessMessageModal.classList.add('hidden');
+}
 
-export { closeForm, renderSuccessModal, showSuccessMessage, hideSuccessMessage };
+function showUnsuccessMessage() {
+  unsuccessMessageModal.classList.remove('hidden');
+}
+
+export { closeForm, renderSuccessModal, showSuccessMessage, hideSuccessMessage, renderUnsuccessModal, showUnsuccessMessage, hideUnsuccessMessage };

@@ -16,12 +16,13 @@ const RERENDER_DELAY = 500;
 const bigPictureImg = document.querySelector('.big-picture__img img');
 const likesCount = document.querySelector('.likes-count');
 const socialCommentsLoader = document.querySelector('.comments-loader');
+const filterRandom = document.querySelector('#filter-random');
+const filterMostCommented = document.querySelector('#filter-discussed');
 let currentPicture;
 
 
 // Шаблон ошибки
 const errorMessageTemplate = document.querySelector('#data-error').content;
-// const errorMessage = document.querySelector('.data-error__title');
 
 const showErrorMessage = () => {
   const errorMessageElement = errorMessageTemplate.cloneNode(true);
@@ -76,6 +77,31 @@ const renderRemotePhotos = (pictureId) => {
 socialCommentsLoader.addEventListener('click', () => renderComments(currentPicture));
 
 
+const showRandomPhotos = () => {
+  fetch(REMOTE_GET_URL)
+    .then((response) => response.json())
+    .then((data) => data.slice())
+    .then((data) => data.filter((photo) => {
+      photo.id = generateRandomInteger(0, 24);
+    }))
+    .then((data) => data.slice(0, 9))
+    .then((data) => debounce(() => generateThumbnails(data), RERENDER_DELAY));
+};
+
+const sortMostCommentedPhotos = (photo1, photo2) => photo1.comments.length - photo2.comments.length;
+
+const showMostCommentedPhotos = () => {
+  fetch(REMOTE_GET_URL)
+    .then((response) => response.json())
+    .then((data) => data.slice())
+    .then((data) => data.sort(sortMostCommentedPhotos))
+    .then((data) => debounce(() => generateThumbnails(data), RERENDER_DELAY));
+};
+
+
+filterRandom.addEventListener('click', showRandomPhotos);
+filterMostCommented.addEventListener('click', showMostCommentedPhotos);
+
 const openCard = () => {
   container.addEventListener('click', (evt) => {
     const currentPhoto = evt.target.closest('.picture');
@@ -87,45 +113,5 @@ const openCard = () => {
   });
 };
 
-function showRandomPhotos() {
-  fetch(REMOTE_GET_URL)
-    .then((response) => response.json())
-    .then((data) => data.slice())
-    .then((data) => data.filter((photo) => photo.id = generateRandomInteger(0, 24)))
-    .then((data) => data.slice(0, 9))
-    .then((data) => generateThumbnails(data));
-}
-// const renderRandomPhotos = () => {
-//   document.querySelectorAll('.picture').forEach((picture) => {
-//     picture.innerHTML = '';
-//     showRandomPhotos();
-//   });
-// }
-function showMostCommentedPhotos() {
-  fetch(REMOTE_GET_URL)
-    .then((response) => response.json())
-    .then((data) => data.slice())
-    .then((data) => data.sort(sortMostCommentedPhotos))
-    .then((data) => generateThumbnails(data));
-}
-
-function sortMostCommentedPhotos(photo1, photo2) {
-  return photo1.comments.length - photo2.comments.length;
-}
-
-// function showRandomPhotosDebounce() {
-//   debounce(() => showRandomPhotos(), RERENDER_DELAY);
-// }
-
-// function showMostCommentedDebounce() {
-//   debounce(() => showMostCommentedPhotos(), RERENDER_DELAY);
-// }
-
-
-// document.querySelector('#filter-random').addEventListener('click', showRandomPhotosDebounce);
-// document.querySelector('#filter-discussed').addEventListener('click', showMostCommentedDebounce);
-
-document.querySelector('#filter-random').addEventListener('click', showRandomPhotos);
-document.querySelector('#filter-discussed').addEventListener('click', showMostCommentedPhotos);
 
 export { renderRemotePhotos, renderRemoteThumbnails, openCard };

@@ -1,5 +1,5 @@
 import { isValid } from './form-validate.js';
-import { closeForm, renderSuccessModal, hideSuccessMessage, showSuccessMessage } from './callbacks.js';
+import { closeForm, renderSuccessModal, hideSuccessMessage, showSuccessMessage, renderUnsuccessModal, showUnsuccessMessage, hideUnsuccessMessage } from './callbacks.js';
 
 const REMOTE_SUBMIT_URL = 'https://32.javascript.htmlacademy.pro/kekstagram';
 
@@ -17,6 +17,7 @@ const isFieldInFocus = () => document.activeElement === hashTagsField || documen
 
 //
 renderSuccessModal();
+renderUnsuccessModal();
 
 document.querySelector('.img-upload__cancel').addEventListener('click', closeForm);
 
@@ -49,6 +50,7 @@ function submitForm(successCallback) {
 
     evt.preventDefault();
     if (isValid) {
+      blockSubmitButton();
       const formData = new FormData(evt.target); // в примере здесь evt.target, не получилось
       fetch(REMOTE_SUBMIT_URL, {
         method: 'POST',
@@ -57,11 +59,21 @@ function submitForm(successCallback) {
         .then((response) => {
           if (response.ok) {
             successCallback(),
-            showSuccessMessage(),
-            hideSuccessMessage();
+              showSuccessMessage(),
+              hideSuccessMessage(),
+              unblockSubmitButton();
+          } else {
+            showUnsuccessMessage(),
+              hideUnsuccessMessage(),
+              unblockSubmitButton();
           }
-        });
-      // .then(hideSuccessMessage());
+        })
+        .catch(() => {
+          showUnsuccessMessage(),
+          hideUnsuccessMessage()
+})
+    } else {
+      blockSubmitButton();
     }
   });
 }
