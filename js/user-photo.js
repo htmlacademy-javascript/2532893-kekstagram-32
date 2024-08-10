@@ -1,5 +1,3 @@
-// Не работает
-
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 

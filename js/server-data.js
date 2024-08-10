@@ -50,6 +50,8 @@ const renderRemoteThumbnails = () => {
       if (response.ok) {
         showFilters();
         return response;
+      } else {
+        showErrorMessage();
       }
     })
     .then((response) => response.json())
@@ -111,17 +113,17 @@ function sortMostCommentedPhotos(photo1, photo2) {
   return photo1.comments.length - photo2.comments.length;
 }
 
-function showRandomPhotosDebounce() {
-  debounce(() => showRandomPhotos(), RERENDER_DELAY);
-}
+// function showRandomPhotosDebounce() {
+//   debounce(() => showRandomPhotos(), RERENDER_DELAY);
+// }
 
-function showMostCommentedDebounce() {
-  debounce(() => showMostCommentedPhotos(), RERENDER_DELAY);
-}
+// function showMostCommentedDebounce() {
+//   debounce(() => showMostCommentedPhotos(), RERENDER_DELAY);
+// }
 
 
-document.querySelector('#filter-random').addEventListener('click', showRandomPhotosDebounce);
-document.querySelector('#filter-discussed').addEventListener('click', showMostCommentedDebounce);
+// document.querySelector('#filter-random').addEventListener('click', showRandomPhotosDebounce);
+// document.querySelector('#filter-discussed').addEventListener('click', showMostCommentedDebounce);
 
 document.querySelector('#filter-random').addEventListener('click', showRandomPhotos);
 document.querySelector('#filter-discussed').addEventListener('click', showMostCommentedPhotos);
