@@ -1,4 +1,4 @@
-// Не понимаю что с отправкой формы, как отследить, ушла или не ушла и как запретить отправку при невалидных полях формы
+
 
 // Постоянные константы из ТЗ
 const HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -8,6 +8,7 @@ const HASHTAGS_ERROR_QUANTITY_TEXT = 'Превышено количество х
 const HASHTAGS_ERROR_UNIQUE_TEXT = 'Хэштеги повторяются';
 const MAX_COMMENT_SYMBOLS = 140;
 const COMMENT_ERROR_TEXT = 'Длина комментария больше 140 символов';
+const REMOTE_SUBMIT_URL = 'https://32.javascript.htmlacademy.pro/kekstagram';
 
 // Поиск элементов
 const imgUploadInput = document.querySelector('.img-upload__input');
@@ -21,20 +22,25 @@ const sliderContainer = document.querySelector('.img-upload__effect-level');
 
 
 // Открытие и закрытие формы редактирования изображения
-imgUploadInput.addEventListener('change', () => {
+const openForm = () => {
   document.querySelector('.img-upload__overlay').classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.querySelector('#effect-none').checked = true;
   slider.classList.add('hidden');
   sliderContainer.classList.add('hidden');
-});
+};
+imgUploadInput.addEventListener('change', openForm);
 
-document.querySelector('.img-upload__cancel').addEventListener('click', () => {
+const closeForm = () => {
   document.querySelector('.img-upload__overlay').classList.add('hidden');
   document.body.classList.remove('modal-open');
   imgUploadInput.value = '';
   document.querySelector('.img-upload__preview img').style.filter = '';
-});
+  hashTagsField.value = '';
+  commentField.value = '';
+};
+
+document.querySelector('.img-upload__cancel').addEventListener('click', closeForm);
 
 document.addEventListener('keydown', (evt) => {
 
@@ -104,10 +110,80 @@ pristine.addValidator(
   COMMENT_ERROR_TEXT
 );
 
+// Отправка формы
 
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate(); // непонятно что с отправкой формы
-});
+const successMessage = document.querySelector('#success').content;
 
 
+const unsuccessMessage = document.querySelector('#error').content;
+const closeUnsuccessMessage = () => document.querySelector('.error').classList.add('hidden');
+
+
+function submitForm(successCallback) {
+  uploadForm.addEventListener('submit', (evt) => {
+
+    evt.preventDefault();
+    if (pristine.validate()) {
+      const formData = new FormData(uploadForm);
+      fetch(REMOTE_SUBMIT_URL, {
+        method: 'POST',
+        body: formData
+
+      }).then(() => successCallback())
+
+        .then(() => hideSuccessMessage(formData))
+        .catch(() => hideUnsuccessMessage(formData));
+    } else {
+      hideUnsuccessMessage();
+    }
+  });
+}
+
+function hideUnsuccessMessage(formData) {
+  document.body.append(unsuccessMessage.cloneNode(true));
+  for (const data of formData) {
+    formData.delete(data);
+
+
+  }
+  document.querySelector('.error__button').addEventListener('click', closeUnsuccessMessage);
+
+  document.body.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      closeUnsuccessMessage();
+    }
+  });
+  document.addEventListener('click', (evt) => {
+    if (!evt.target.closest('.error__inner')) {
+      closeUnsuccessMessage();
+    }
+  });
+
+}
+
+
+function hideSuccessMessage(formData) {
+  document.body.append(successMessage.cloneNode(true));
+  for (const data of formData) {
+    formData.delete(data);
+  }
+  document.querySelector('.success__button').addEventListener('click', closeSuccessMessage);
+  document.body.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      closeSuccessMessage();
+    }
+  });
+  document.addEventListener('click', (evt) => {
+    if (!evt.target.closest('.success__inner')) {
+      closeSuccessMessage();
+    }
+  });
+}
+
+
+function closeSuccessMessage() {
+  document.querySelector('.success').classList.add('hidden');
+}
+
+
+export { submitForm, closeForm };
