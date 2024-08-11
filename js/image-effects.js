@@ -121,4 +121,4 @@ noUiSlider.create(slider, {
 blockEffects.addEventListener('change', onEffectChange);
 slider.noUiSlider.on('update', onSliderUpdate);
 
-export { resetEffectsImage }
+export { resetEffectsImage };
