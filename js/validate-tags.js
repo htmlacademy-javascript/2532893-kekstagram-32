@@ -1,22 +1,31 @@
+const HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTAG_COUNT = 5;
-const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
+const MAX_COMMENT_SYMBOLS = 140;
 
-const hasValidCount = (arrayTags) => arrayTags.length <= MAX_HASHTAG_COUNT;
+const uploadForm = document.querySelector('.img-upload__form');
+const hashTagsField = uploadForm.querySelector('.text__hashtags');
+const commentField = uploadForm.querySelector('.text__description');
 
-const hasUniqueTags = (arrayTags) => {
-  const arrayLowerCaseTags = arrayTags.map((tag) => tag.toLowerCase());
-  return arrayLowerCaseTags.length === new Set(arrayLowerCaseTags).size;
+
+const areHashtagSymbolsValid = () => hashTagsField.value.length === 0 || hashTagsField.value
+  .trim()
+  .split(' ')
+  .every((hashtag) => HASHTAG_SYMBOLS.test(hashtag));
+
+const areHashtagsQuantityValid = () => hashTagsField.value.split(' ').length <= MAX_HASHTAG_COUNT;
+
+const createSetOfHashtags = () => {
+  const setOfHashtags = new Set();
+  const uniqueHashtags = hashTagsField.value.split(' ').map((hashtag) => hashtag.trim().toLowerCase());
+  for (let i = 0; i < uniqueHashtags.length; i++) {
+    setOfHashtags.add(uniqueHashtags[i]);
+  }
+  return setOfHashtags;
 };
 
-const hasValidSymbols = (tag) => VALID_SYMBOLS.test(tag);
+const areHashtagsUnique = () => createSetOfHashtags().size === hashTagsField.value.split(' ').length;
 
-const validateTags = (stringTags) => {
-  const arrayTags = stringTags
-    .trim()
-    .split(' ')
-    .filter((tag) => tag.trim().length);
+const areCommentValid = () => commentField.value.length <= MAX_COMMENT_SYMBOLS;
 
-  return hasValidCount(arrayTags) && hasUniqueTags(arrayTags) && arrayTags.every(hasValidSymbols);
-};
 
-export { validateTags };
+export { areHashtagSymbolsValid, areHashtagsQuantityValid, areHashtagsUnique, areCommentValid };
