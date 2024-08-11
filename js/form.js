@@ -1,95 +1,92 @@
 
+import {isEscapeKey} from './helpers/test-keys.js';
+import { areHashtagSymbolsValid, areHashtagsQuantityValid, areHashtagsUnique, areCommentValid } from './validate-tags.js';
+import {showModal, hideModal} from './modal.js';
+import {addOnButtonCloseClick, addEventListenerKeydown} from './helpers/event-listeners.js';
+import {sendData} from './api.js';
+import {showAlert} from './helpers/show-alert.js';
+import {showMessage} from './modal-message.js';
 
-// Постоянные константы из ТЗ
-const HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
-const MAX_HASHTAG_COUNT = 5;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const HASHTAGS_ERROR_SYMBOLS_TEXT = 'Введён невалидный хэштег';
 const HASHTAGS_ERROR_QUANTITY_TEXT = 'Превышено количество хэштегов';
 const HASHTAGS_ERROR_UNIQUE_TEXT = 'Хэштеги повторяются';
-const MAX_COMMENT_SYMBOLS = 140;
 const COMMENT_ERROR_TEXT = 'Длина комментария больше 140 символов';
-const REMOTE_SUBMIT_URL = 'https://32.javascript.htmlacademy.pro/kekstagram';
 
-// Поиск элементов
-const imgUploadInput = document.querySelector('.img-upload__input');
-const uploadForm = document.querySelector('.img-upload__form');
-const hashTagsField = uploadForm.querySelector('.text__hashtags');
-const commentField = uploadForm.querySelector('.text__description');
-const isFieldInFocus = () => document.activeElement === hashTagsField || document.activeElement === commentField;
-const slider = document.querySelector('.effect-level__slider');
-const sliderContainer = document.querySelector('.img-upload__effect-level');
-// const hashtags = hashTagsField.value.split(' '); - - не работает
-
-
-// Открытие и закрытие формы редактирования изображения
-const openForm = () => {
-  document.querySelector('.img-upload__overlay').classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  document.querySelector('#effect-none').checked = true;
-  slider.classList.add('hidden');
-  sliderContainer.classList.add('hidden');
-};
-imgUploadInput.addEventListener('change', openForm);
-
-const closeForm = () => {
-  document.querySelector('.img-upload__overlay').classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  imgUploadInput.value = '';
-  document.querySelector('.img-upload__preview img').style.filter = '';
-  hashTagsField.value = '';
-  commentField.value = '';
+const buttonSubmitText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
 };
 
-document.querySelector('.img-upload__cancel').addEventListener('click', closeForm);
+const sectionImgUpload = document.querySelector('.img-upload');
+const formUpload = sectionImgUpload.querySelector('.img-upload__form');
+const blockUploadOverlay = formUpload.querySelector('.img-upload__overlay');
+const fieldUploadFile = formUpload.querySelector('#upload-file');
+const hashTagsField = formUpload.querySelector('.text__hashtags');
+const commentField = formUpload.querySelector('.text__description');
+const buttonClose = formUpload.querySelector('#upload-cancel');
+const buttonSubmit = formUpload.querySelector('#upload-submit');
+const fieldsText = [hashTagsField, commentField];
 
-document.addEventListener('keydown', (evt) => {
+const blockEffects = sectionImgUpload.querySelector('.effects');
+const sliderContainer = sectionImgUpload.querySelector('.img-upload__effect-level');
+const slider = sectionImgUpload.querySelector('.effect-level__slider');
+const fieldEffectLevel = sectionImgUpload.querySelector('.effect-level__value');
+const imagePreview = sectionImgUpload.querySelector('.img-upload__preview img');
 
-  if (evt.key === 'Escape' && !isFieldInFocus()) {
-    evt.preventDefault();
-    document.querySelector('.img-upload__overlay').classList.add('hidden');
-    document.body.classList.remove('modal-open');
-    imgUploadInput.value = '';
-    document.querySelector('.img-upload__preview img').style.filter = '';
-  }
 
-});
-// Валидация Pristine
+const buttonSmaller = sectionImgUpload.querySelector('.scale__control--smaller');
+const buttonBigger = sectionImgUpload.querySelector('.scale__control--bigger');
+const fieldScale = sectionImgUpload.querySelector('.scale__control--value');
+const scale = sectionImgUpload.querySelector('.scale');
 
-const pristine = new Pristine(uploadForm, {
+
+const pristine = new Pristine(formUpload, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error'
 },
 true);
 
-// Валидация хэштегов
+const showChosenFile = () => {
+  const file = fieldUploadFile.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
-const areHashtagSymbolsValid = () => {
-  let validItem = null;
-  for (const item of hashTagsField.value.split(' ')) {
-    validItem = HASHTAG_SYMBOLS.test(item);
+  if (matches) {
+    imagePreview.src = URL.createObjectURL(file);
   }
-  return validItem;
 };
 
-const areHashtagsQuantityValid = () => hashTagsField.value.split(' ').length <= MAX_HASHTAG_COUNT;
-
-const createSetOfHashtags = () => {
-  const setOfHashtags = new Set();
-  const uniqueHashtags = hashTagsField.value.split(' ').map((hashtag) => hashtag.trim().toLowerCase());
-  for (let i = 0; i < uniqueHashtags.length; i++) {
-    setOfHashtags.add(uniqueHashtags[i]);
-
-
-  }
-  return setOfHashtags;
+const onInputFileChange = () => {
+  showModalForm();
+  showChosenFile();
 };
-const areHashtagsUnique = () => createSetOfHashtags().size === hashTagsField.value.split(' ').length;
 
-pristine.addValidator(
-  hashTagsField,
-  areHashtagSymbolsValid,
-  HASHTAGS_ERROR_SYMBOLS_TEXT);
+const onDocumentKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    hideModalForm();
+  }
+};
+
+function showModalForm() {
+  showModal(blockUploadOverlay);
+  document.addEventListener('keydown', onDocumentKeydown);
+  addOnButtonCloseClick(buttonClose, hideModalForm);
+  addEventListenerKeydown(fieldsText);
+  pristine.reset();
+}
+
+function hideModalForm() {
+  hideModal(blockUploadOverlay);
+  document.removeEventListener('keydown', onDocumentKeydown);
+  addOnButtonCloseClick(buttonClose, hideModalForm, false);
+  addEventListenerKeydown(fieldsText, false);
+  formUpload.reset();
+  pristine.reset();
+}
 
 pristine.addValidator(
   hashTagsField,
@@ -98,11 +95,13 @@ pristine.addValidator(
 
 pristine.addValidator(
   hashTagsField,
+  areHashtagSymbolsValid,
+  HASHTAGS_ERROR_SYMBOLS_TEXT);
+
+pristine.addValidator(
+  hashTagsField,
   areHashtagsUnique,
   HASHTAGS_ERROR_UNIQUE_TEXT);
-
-// Валидация комментариев
-const areCommentValid = () => commentField.value.length <= MAX_COMMENT_SYMBOLS;
 
 pristine.addValidator(
   commentField,
@@ -110,80 +109,37 @@ pristine.addValidator(
   COMMENT_ERROR_TEXT
 );
 
-// Отправка формы
 
-const successMessage = document.querySelector('#success').content;
+const blockSubmitButton = () => {
+  buttonSubmit.disabled = true;
+  buttonSubmit.textContent = buttonSubmitText.SENDING;
+};
 
+const unblockSubmitButton = () => {
+  buttonSubmit.disabled = false;
+  buttonSubmit.textContent = buttonSubmitText.IDLE;
+};
 
-const unsuccessMessage = document.querySelector('#error').content;
-const closeUnsuccessMessage = () => document.querySelector('.error').classList.add('hidden');
-
-
-function submitForm(successCallback) {
-  uploadForm.addEventListener('submit', (evt) => {
-
+const setOnFormSubmit = (onSuccess) => {
+  formUpload.addEventListener('submit', async (evt) => {
     evt.preventDefault();
-    if (pristine.validate()) {
-      const formData = new FormData(uploadForm);
-      fetch(REMOTE_SUBMIT_URL, {
-        method: 'POST',
-        body: formData
-
-      }).then(() => successCallback())
-
-        .then(() => hideSuccessMessage(formData))
-        .catch(() => hideUnsuccessMessage(formData));
-    } else {
-      hideUnsuccessMessage();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(new FormData(formUpload))
+        .then(onSuccess)
+        .then(showMessage('success'))
+        .catch(
+          (err) => {
+            showAlert(err.message);
+            showMessage('error');
+          }
+        )
+        .finally(unblockSubmitButton);
     }
   });
-}
+};
 
-function hideUnsuccessMessage(formData) {
-  document.body.append(unsuccessMessage.cloneNode(true));
-  for (const data of formData) {
-    formData.delete(data);
+fieldUploadFile.addEventListener('change', onInputFileChange);
 
-
-  }
-  document.querySelector('.error__button').addEventListener('click', closeUnsuccessMessage);
-
-  document.body.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      closeUnsuccessMessage();
-    }
-  });
-  document.addEventListener('click', (evt) => {
-    if (!evt.target.closest('.error__inner')) {
-      closeUnsuccessMessage();
-    }
-  });
-
-}
-
-
-function hideSuccessMessage(formData) {
-  document.body.append(successMessage.cloneNode(true));
-  for (const data of formData) {
-    formData.delete(data);
-  }
-  document.querySelector('.success__button').addEventListener('click', closeSuccessMessage);
-  document.body.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      closeSuccessMessage();
-    }
-  });
-  document.addEventListener('click', (evt) => {
-    if (!evt.target.closest('.success__inner')) {
-      closeSuccessMessage();
-    }
-  });
-}
-
-
-function closeSuccessMessage() {
-  document.querySelector('.success').classList.add('hidden');
-}
-
-
-export { submitForm, closeForm };
+export { blockEffects, sliderContainer, slider, fieldEffectLevel, imagePreview, buttonSmaller, buttonBigger, fieldScale, scale, showModalForm, hideModalForm, setOnFormSubmit };
