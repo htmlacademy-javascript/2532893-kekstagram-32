@@ -1,16 +1,6 @@
-// import { photos } from './setup.js';
+import {runRenderGallery} from './render-gallery.js';
+import {hideModalForm, setOnFormSubmit} from './form.js';
 
-// import { openBigPicture } from './full-size-pictures.js';
-import './form-validate.js';
-import './img-effects.js';
-import './scale-control.js';
-import './server-data.js';
-import { renderRemoteThumbnails, openCard } from './server-data.js';
-import { submitForm } from './form-upload.js';
-import { closeForm } from './callbacks.js';
-import './user-photo.js';
+runRenderGallery();
 
-renderRemoteThumbnails();
-openCard();
-submitForm(closeForm);
-
+setOnFormSubmit(hideModalForm);
