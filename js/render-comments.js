@@ -41,4 +41,4 @@ const renderComments = (arrayComments) => {
   socialCommentShow.textContent = commentsShow;
 };
 
-export { getTemplateComment, resetCommentsShow, renderComments }
+export { getTemplateComment, resetCommentsShow, renderComments };
