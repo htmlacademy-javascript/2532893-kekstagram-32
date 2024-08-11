@@ -1,4 +1,4 @@
-const socialCommentShow = document.querySelector('.comments-show');
+const socialCommentShow = document.querySelector('.social__comment-shown-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const commentsList = document.querySelector('.social__comments');
 

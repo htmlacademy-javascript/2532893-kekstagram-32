@@ -1,6 +1,6 @@
 import {isEscapeKey} from './test-keys.js';
 
-export const addOnButtonCloseClick = (element, functionClose, add = true) => {
+const addOnButtonCloseClick = (element, functionClose, add = true) => {
   if (add) {
     element.addEventListener('click', functionClose);
   } else {
@@ -8,7 +8,7 @@ export const addOnButtonCloseClick = (element, functionClose, add = true) => {
   }
 };
 
-export const addEventListenerKeydown = (elements, add = true) => {
+const addEventListenerKeydown = (elements, add = true) => {
   elements.forEach((element) => {
     if (add) {
       element.addEventListener('keydown', (evt) => {
@@ -27,3 +27,5 @@ export const addEventListenerKeydown = (elements, add = true) => {
     }
   });
 };
+
+export { addOnButtonCloseClick, addEventListenerKeydown };

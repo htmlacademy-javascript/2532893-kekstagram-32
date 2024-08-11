@@ -1,22 +1,13 @@
 const ALERT_SHOW_TIME = 5000;
 
-export const showAlert = (message) => {
-  const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = '100';
-  alertContainer.style.position = 'absolute';
-  alertContainer.style.left = '0';
-  alertContainer.style.top = '0';
-  alertContainer.style.right = '0';
-  alertContainer.style.padding = '10px 3px';
-  alertContainer.style.fontSize = '30px';
-  alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = '#ff0000';
+const errorMessageTemplate = document.querySelector('#data-error').content;
 
-  alertContainer.textContent = message;
-
-  document.body.append(alertContainer);
-
+const showAlert = () => {
+  const errorMessageElement = errorMessageTemplate.cloneNode(true);
+  document.body.append(errorMessageElement);
   setTimeout(() => {
-    alertContainer.remove();
+    document.querySelector('.data-error').remove();
   }, ALERT_SHOW_TIME);
 };
+
+export { showAlert };
