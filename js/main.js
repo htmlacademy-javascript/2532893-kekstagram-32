@@ -2,6 +2,8 @@ import { photos } from './setup.js';
 import { container, generateThumbnails } from './thumbs.js';
 import { openBigPicture } from './full-size-pictures.js';
 import './form.js';
+import './img-effects.js';
+import './scale-control.js';
 
 
 generateThumbnails(photos);
