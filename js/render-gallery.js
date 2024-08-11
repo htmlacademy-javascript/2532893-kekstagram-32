@@ -6,7 +6,7 @@ import {showFilters} from './filters.js';
 
 const container = document.querySelector('.pictures');
 
-export const renderGallery = (arrayMedia, firstRender = false) => {
+const renderGallery = (arrayMedia, firstRender = false) => {
   renderThumbnails(arrayMedia);
 
   if (firstRender) {
@@ -28,7 +28,7 @@ export const renderGallery = (arrayMedia, firstRender = false) => {
   }
 };
 
-export const runRenderGallery = async () => {
+const runRenderGallery = async () => {
   try {
     const data = await getData();
     renderGallery(data, true);
@@ -37,3 +37,5 @@ export const runRenderGallery = async () => {
     showAlert(err.message);
   }
 };
+
+export { renderGallery , runRenderGallery };

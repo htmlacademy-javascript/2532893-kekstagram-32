@@ -16,16 +16,16 @@ const buttonClose = formUpload.querySelector('#upload-cancel');
 const buttonSubmit = formUpload.querySelector('#upload-submit');
 const fieldsText = [fieldHashtag, fieldComment];
 
-export const blockEffects = sectionImgUpload.querySelector('.effects');
-export const sliderContainer = sectionImgUpload.querySelector('.img-upload__effect-level');
-export const slider = sectionImgUpload.querySelector('.effect-level__slider');
-export const fieldEffectLevel = sectionImgUpload.querySelector('.effect-level__value');
-export const imagePreview = sectionImgUpload.querySelector('.img-upload__preview img');
+const blockEffects = sectionImgUpload.querySelector('.effects');
+const sliderContainer = sectionImgUpload.querySelector('.img-upload__effect-level');
+const slider = sectionImgUpload.querySelector('.effect-level__slider');
+const fieldEffectLevel = sectionImgUpload.querySelector('.effect-level__value');
+const imagePreview = sectionImgUpload.querySelector('.img-upload__preview img');
 
-export const buttonSmaller = sectionImgUpload.querySelector('.scale__control--smaller');
-export const buttonBigger = sectionImgUpload.querySelector('.scale__control--bigger');
-export const fieldScale = sectionImgUpload.querySelector('.scale__control--value');
-export const scale = sectionImgUpload.querySelector('.scale');
+const buttonSmaller = sectionImgUpload.querySelector('.scale__control--smaller');
+const buttonBigger = sectionImgUpload.querySelector('.scale__control--bigger');
+const fieldScale = sectionImgUpload.querySelector('.scale__control--value');
+const scale = sectionImgUpload.querySelector('.scale');
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const HASHTAG_ERROR_TEXT = 'Некорректно заполнено поле "Хэш-тег"';
@@ -63,7 +63,7 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-export function showModalForm() {
+function showModalForm() {
   showModal(blockUploadOverlay);
   document.addEventListener('keydown', onDocumentKeydown);
   addOnButtonCloseClick(buttonClose, hideModalForm);
@@ -71,7 +71,7 @@ export function showModalForm() {
   pristine.reset();
 }
 
-export function hideModalForm() {
+function hideModalForm() {
   hideModal(blockUploadOverlay);
   document.removeEventListener('keydown', onDocumentKeydown);
   addOnButtonCloseClick(buttonClose, hideModalForm, false);
@@ -96,7 +96,7 @@ const unblockSubmitButton = () => {
   buttonSubmit.textContent = buttonSubmitText.IDLE;
 };
 
-export const setOnFormSubmit = (onSuccess) => {
+const setOnFormSubmit = (onSuccess) => {
   formUpload.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
@@ -117,3 +117,5 @@ export const setOnFormSubmit = (onSuccess) => {
 };
 
 fieldUploadFile.addEventListener('change', onInputFileChange);
+
+export { blockEffects, sliderContainer, slider, fieldEffectLevel, imagePreview, buttonSmaller, buttonBigger, fieldScale, scale, showModalForm, hideModalForm, setOnFormSubmit }

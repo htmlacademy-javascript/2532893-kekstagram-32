@@ -103,7 +103,7 @@ const onSliderUpdate = () => {
   fieldEffectLevel.value = sliderValue;
 };
 
-export const resetEffectsImage = () => {
+const resetEffectsImage = () => {
   newSettings = DEFAULT_SETTINGS;
   updateSlider();
 };
@@ -120,3 +120,5 @@ noUiSlider.create(slider, {
 
 blockEffects.addEventListener('change', onEffectChange);
 slider.noUiSlider.on('update', onSliderUpdate);
+
+export { resetEffectsImage }

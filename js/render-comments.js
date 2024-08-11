@@ -6,7 +6,7 @@ const STEP_COMMENTS_SHOW = 5;
 let commentsShow = 0;
 let newArrayComments = [];
 
-export const getTemplateComment = (arrayElement) => {
+const getTemplateComment = (arrayElement) => {
   const commentTemplate =
     `<li class="social__comment">
       <img class="social__picture" src="${arrayElement.avatar}" alt="${arrayElement.name}" width="35" height="35">
@@ -16,11 +16,11 @@ export const getTemplateComment = (arrayElement) => {
   return commentTemplate;
 };
 
-export const resetCommentsShow = () => {
+const resetCommentsShow = () => {
   commentsShow = 0;
 };
 
-export const renderComments = (arrayComments) => {
+const renderComments = (arrayComments) => {
   commentsList.innerHTML = '';
 
   if (Array.isArray(arrayComments)) {
@@ -40,3 +40,5 @@ export const renderComments = (arrayComments) => {
 
   socialCommentShow.textContent = commentsShow;
 };
+
+export { getTemplateComment, resetCommentsShow, renderComments }

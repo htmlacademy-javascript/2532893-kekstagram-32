@@ -25,14 +25,14 @@ const createMessage = (template) => {
   body.append(fragment);
 };
 
-export const hideMessage = (state) => {
+const hideMessage = (state) => {
   const message = body.querySelector(`.${state}`);
   message.remove();
   document.removeEventListener('keydown', onDocumentKeydown);
   document.removeEventListener('click', onDocumentClick);
 };
 
-export const showMessage = (state) => {
+const showMessage = (state) => {
   createMessage(state === 'success' ? templateMessageSuccess : templateMessageError);
   const buttonClose = body.querySelector(`.${state}__button`);
   buttonClose.addEventListener('click', () => {
@@ -50,3 +50,5 @@ function closeMessage () {
     hideMessage('error');
   }
 }
+
+export { hideMessage, showMessage };

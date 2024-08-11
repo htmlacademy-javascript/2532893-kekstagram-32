@@ -29,6 +29,8 @@ scale.addEventListener('click', (evt) => {
   }
 });
 
-export const resetScaleImage = () => {
+const resetScaleImage = () => {
   updateScaleValue(SCALE_DEFAULT);
 };
+
+export { resetScaleImage };

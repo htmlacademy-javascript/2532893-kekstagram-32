@@ -10,7 +10,7 @@ const hasUniqueTags = (arrayTags) => {
 
 const hasValidSymbols = (tag) => VALID_SYMBOLS.test(tag);
 
-export const validateTags = (stringTags) => {
+const validateTags = (stringTags) => {
   const arrayTags = stringTags
     .trim()
     .split(' ')
@@ -18,3 +18,5 @@ export const validateTags = (stringTags) => {
 
   return hasValidCount(arrayTags) && hasUniqueTags(arrayTags) && arrayTags.every(hasValidSymbols);
 };
+
+export { validateTags };

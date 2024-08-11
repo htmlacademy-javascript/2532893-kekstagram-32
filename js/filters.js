@@ -37,7 +37,7 @@ const onClickButtonFilters = (evt, arrayMedia, callback) => {
   }
 };
 
-export const showFilters = (arrayMedia) => {
+const showFilters = (arrayMedia) => {
   if (sectionFilters.classList.contains('img-filters--inactive')) {
     sectionFilters.classList.remove('img-filters--inactive');
   }
@@ -45,3 +45,5 @@ export const showFilters = (arrayMedia) => {
     onClickButtonFilters(evt, arrayMedia, debounce(renderGallery, TIMEOUT_DELAY));
   });
 };
+
+export { showFilters };

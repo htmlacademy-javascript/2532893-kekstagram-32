@@ -2,7 +2,7 @@ import {getTemplate} from './helpers/get-template.js';
 
 const thumbnailTemplate = getTemplate('#picture', '.picture');
 
-export const createThumbnail = ({url, description, comments, likes, id}) => {
+const createThumbnail = ({url, description, comments, likes, id}) => {
   const thumbnail = thumbnailTemplate.cloneNode(true);
 
   thumbnail.querySelector('.picture__img').src = url;
@@ -13,3 +13,5 @@ export const createThumbnail = ({url, description, comments, likes, id}) => {
 
   return thumbnail;
 };
+
+export { createThumbnail };

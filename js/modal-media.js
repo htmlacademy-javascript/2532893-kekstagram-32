@@ -22,7 +22,7 @@ const onDocumentClick = (evt) => {
   }
 };
 
-export function hideModalMedia () {
+function hideModalMedia () {
   hideModal(bigPicture);
   commentsLoader.classList.remove('hidden');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -32,7 +32,7 @@ export function hideModalMedia () {
   commentsLoader.removeEventListener('click', renderComments);
 }
 
-export function showModalMedia (arrayMedia) {
+function showModalMedia (arrayMedia) {
   showModal(bigPicture);
   document.addEventListener('keydown', onDocumentKeydown);
   document.addEventListener('click', onDocumentClick);
@@ -40,3 +40,5 @@ export function showModalMedia (arrayMedia) {
   renderFullSizeMedia(arrayMedia);
   commentsLoader.addEventListener('click', renderComments);
 }
+
+export { hideModalMedia, showModalMedia };
