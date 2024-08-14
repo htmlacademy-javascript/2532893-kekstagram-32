@@ -125,8 +125,10 @@ const setOnFormSubmit = (onSuccess) => {
     if (isValid) {
       blockSubmitButton();
       sendData(new FormData(formUpload))
-        .then(onSuccess)
-        .then(showMessage('success'))
+        .then(() => {
+          onSuccess();
+          showMessage('success');
+        })
         .catch(
           (err) => {
             showAlert(err.message);
