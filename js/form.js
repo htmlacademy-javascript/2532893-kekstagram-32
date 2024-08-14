@@ -4,7 +4,6 @@ import { areHashtagSymbolsValid, areHashtagsQuantityValid, areHashtagsUnique, ar
 import {showModal, hideModal} from './modal.js';
 import {addOnButtonCloseClick, addEventListenerKeydown} from './helpers/event-listeners.js';
 import {sendData} from './api.js';
-import {showAlert} from './helpers/show-alert.js';
 import {showMessage} from './modal-message.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
@@ -40,6 +39,7 @@ const buttonSmaller = sectionImgUpload.querySelector('.scale__control--smaller')
 const buttonBigger = sectionImgUpload.querySelector('.scale__control--bigger');
 const fieldScale = sectionImgUpload.querySelector('.scale__control--value');
 const scale = sectionImgUpload.querySelector('.scale');
+const effectPreview = document.querySelectorAll('.effects__preview');
 
 
 const pristine = new Pristine(formUpload, {
@@ -56,6 +56,9 @@ const showChosenFile = () => {
 
   if (matches) {
     imagePreview.src = URL.createObjectURL(file);
+    effectPreview.forEach((it) => {
+      it.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+    });
   }
 };
 
@@ -64,7 +67,7 @@ const onInputFileChange = () => {
   showChosenFile();
 };
 
-const onDocumentKeydown = (evt) => {
+const onFormKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     hideModalForm();
@@ -73,7 +76,7 @@ const onDocumentKeydown = (evt) => {
 
 function showModalForm() {
   showModal(blockUploadOverlay);
-  document.addEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('keydown', onFormKeydown);
   addOnButtonCloseClick(buttonClose, hideModalForm);
   addEventListenerKeydown(fieldsText);
   pristine.reset();
@@ -81,7 +84,7 @@ function showModalForm() {
 
 function hideModalForm() {
   hideModal(blockUploadOverlay);
-  document.removeEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('keydown', onFormKeydown);
   addOnButtonCloseClick(buttonClose, hideModalForm, false);
   addEventListenerKeydown(fieldsText, false);
   formUpload.reset();
@@ -132,8 +135,7 @@ const setOnFormSubmit = (onSuccess) => {
           showMessage('success');
         })
         .catch(
-          (err) => {
-            showAlert(err.message);
+          () => {
             showMessage('error');
           }
         )
@@ -144,4 +146,4 @@ const setOnFormSubmit = (onSuccess) => {
 
 fieldUploadFile.addEventListener('change', onInputFileChange);
 
-export { blockEffects, sliderContainer, slider, fieldEffectLevel, imagePreview, buttonSmaller, buttonBigger, fieldScale, scale, showModalForm, hideModalForm, setOnFormSubmit };
+export { blockEffects, sliderContainer, slider, fieldEffectLevel, imagePreview, buttonSmaller, buttonBigger, fieldScale, scale, showModalForm, hideModalForm, setOnFormSubmit, onFormKeydown };

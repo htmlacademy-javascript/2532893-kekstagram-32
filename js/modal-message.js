@@ -1,5 +1,6 @@
 import {getTemplate} from './helpers/get-template.js';
-import {isEscapeKey} from './helpers/test-keys.js';
+import { isEscapeKey } from './helpers/test-keys.js';
+import { onFormKeydown } from './form.js';
 
 const body = document.querySelector('body');
 const templateMessageSuccess = getTemplate('#success', '.success');
@@ -42,6 +43,7 @@ const hideMessage = () => {
 const showMessage = (state) => {
   createMessage(state === 'success' ? templateMessageSuccess : templateMessageError);
   const buttonClose = body.querySelector(`.${state}__button`);
+  document.removeEventListener('keydown', onFormKeydown);
   buttonClose.addEventListener('click', hideMessage);
   document.addEventListener('keydown', onDocumentKeydown);
   document.addEventListener('click', onDocumentClick);
