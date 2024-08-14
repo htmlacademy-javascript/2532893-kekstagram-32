@@ -7,7 +7,7 @@ const SCALE_DEFAULT = 100;
 
 const updateScaleValue = (newValue) => {
   imagePreview.style.transform = `scale(${newValue * 0.01})`;
-  fieldScale.value = `${newValue}%`;
+  fieldScale.setAttribute('value', `${newValue}%`);
 };
 
 const getNewScaleValue = (operator) => {
