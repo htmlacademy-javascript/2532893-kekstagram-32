@@ -1,3 +1,4 @@
+
 import {isEscapeKey} from './helpers/test-keys.js';
 import { areHashtagSymbolsValid, areHashtagsQuantityValid, areHashtagsUnique, areCommentValid } from './validate-tags.js';
 import {showModal, hideModal} from './modal.js';
@@ -7,6 +8,7 @@ import {showAlert} from './helpers/show-alert.js';
 import {showMessage} from './modal-message.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const HASHTAGS_ERROR_SYMBOLS_TEXT = 'Введён невалидный хэштег';
 const HASHTAGS_ERROR_QUANTITY_TEXT = 'Превышено количество хэштегов';
 const HASHTAGS_ERROR_UNIQUE_TEXT = 'Хэштеги повторяются';
