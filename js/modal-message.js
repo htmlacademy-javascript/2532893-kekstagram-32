@@ -25,9 +25,16 @@ const createMessage = (template) => {
   body.append(fragment);
 };
 
-const hideMessage = (state) => {
-  const message = body.querySelector(`.${state}`);
-  message.remove();
+const hideMessage = () => {
+  const successMessage = body.querySelector('.success');
+  const unsuccessMessage = body.querySelector('.error');
+  if (successMessage !== null) {
+    successMessage.remove();
+  } else if (unsuccessMessage !== null) {
+    unsuccessMessage.remove();
+
+  }
+
   document.removeEventListener('keydown', onDocumentKeydown);
   document.removeEventListener('click', onDocumentClick);
 };
@@ -35,19 +42,14 @@ const hideMessage = (state) => {
 const showMessage = (state) => {
   createMessage(state === 'success' ? templateMessageSuccess : templateMessageError);
   const buttonClose = body.querySelector(`.${state}__button`);
-  buttonClose.addEventListener('click', () => {
-    hideMessage(state);
-  });
+  buttonClose.addEventListener('click', hideMessage);
   document.addEventListener('keydown', onDocumentKeydown);
   document.addEventListener('click', onDocumentClick);
 };
 
 function closeMessage () {
-  if (body.querySelector('.success') !== null) {
-    hideMessage('success');
-  }
-  if (body.querySelector('.error') !== null) {
-    hideMessage('error');
+  if ((body.querySelector('.success') !== null) || (body.querySelector('.error') !== null)) {
+    hideMessage();
   }
 }
 
