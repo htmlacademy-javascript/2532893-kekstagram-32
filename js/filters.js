@@ -1,12 +1,14 @@
 import {renderGallery} from './render-gallery.js';
-import {debounce} from './helpers/debounce.js';
+import { debounce } from './helpers/debounce.js';
+
+const TIMEOUT_DELAY = 500;
+const MAX_COUNT_RANDOM_ELEMENTS = 10;
 
 const sectionFilters = document.querySelector('.img-filters');
 const formFilters = document.querySelector('.img-filters__form');
 let currentFilter = sectionFilters.querySelector('.img-filters__button--active');
 
-const TIMEOUT_DELAY = 500;
-const MAX_COUNT_RANDOM_ELEMENTS = 10;
+
 const Filters = {
   DEFAULT: 'filter-default',
   RANDOM: 'filter-random',
@@ -28,7 +30,7 @@ const getFilteredArray = (arrayMedia, chosenFilter) => {
   return newArray;
 };
 
-const onClickButtonFilters = (evt, arrayMedia, callback) => {
+const setFilterButton = (evt, arrayMedia, callback) => {
   if (evt.target.className === 'img-filters__button' && evt.target !== currentFilter) {
     currentFilter.classList.remove('img-filters__button--active');
     currentFilter = evt.target;
@@ -42,7 +44,7 @@ const showFilters = (arrayMedia) => {
     sectionFilters.classList.remove('img-filters--inactive');
   }
   formFilters.addEventListener('click', (evt) => {
-    onClickButtonFilters(evt, arrayMedia, debounce(renderGallery, TIMEOUT_DELAY));
+    setFilterButton(evt, arrayMedia, debounce(renderGallery, TIMEOUT_DELAY));
   });
 };
 

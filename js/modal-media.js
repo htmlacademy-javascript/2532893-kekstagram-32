@@ -2,7 +2,7 @@ import {isEscapeKey} from './helpers/test-keys.js';
 import {renderFullSizeMedia} from './render-full-size-media.js';
 import {showModal, hideModal} from './modal.js';
 import {addOnButtonCloseClick} from './helpers/event-listeners.js';
-import {renderComments, resetCommentsShow} from './render-comments.js';
+import { onClickCommentsShow, resetCommentsShow} from './render-comments.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const commentsLoader = document.querySelector('.comments-loader');
@@ -29,7 +29,7 @@ function hideModalMedia () {
   document.removeEventListener('click', onDocumentClick);
   addOnButtonCloseClick(buttonClose, hideModalMedia, false);
   resetCommentsShow();
-  commentsLoader.removeEventListener('click', renderComments);
+  commentsLoader.removeEventListener('click', onClickCommentsShow);
 }
 
 function showModalMedia (arrayMedia) {
@@ -38,7 +38,7 @@ function showModalMedia (arrayMedia) {
   document.addEventListener('click', onDocumentClick);
   addOnButtonCloseClick(buttonClose, hideModalMedia);
   renderFullSizeMedia(arrayMedia);
-  commentsLoader.addEventListener('click', renderComments);
+  commentsLoader.addEventListener('click', onClickCommentsShow);
 }
 
 export { hideModalMedia, showModalMedia };
