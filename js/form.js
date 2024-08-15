@@ -2,7 +2,7 @@
 import {isEscapeKey} from './helpers/test-keys.js';
 import { areHashtagSymbolsValid, areHashtagsQuantityValid, areHashtagsUnique, areCommentValid } from './validate-tags.js';
 import {showModal, hideModal} from './modal.js';
-import {addOnButtonCloseClick, addEventListenerKeydown} from './helpers/event-listeners.js';
+import {addOnButtonCloseClick} from './helpers/event-listeners.js';
 import {sendData} from './api.js';
 import {showMessage} from './modal-message.js';
 
@@ -26,7 +26,7 @@ const hashTagsField = formUpload.querySelector('.text__hashtags');
 const commentField = formUpload.querySelector('.text__description');
 const buttonClose = formUpload.querySelector('#upload-cancel');
 const buttonSubmit = formUpload.querySelector('#upload-submit');
-const fieldsText = [hashTagsField, commentField];
+const isFieldInFocus = () => document.activeElement === hashTagsField || document.activeElement === commentField;
 
 const blockEffects = sectionImgUpload.querySelector('.effects');
 const sliderContainer = sectionImgUpload.querySelector('.img-upload__effect-level');
@@ -68,8 +68,9 @@ const onInputFileChange = () => {
 };
 
 const onFormKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  if (isEscapeKey(evt) && !isFieldInFocus()) {
     evt.preventDefault();
+
     hideModalForm();
   }
 };
@@ -78,7 +79,6 @@ function showModalForm() {
   showModal(blockUploadOverlay);
   document.addEventListener('keydown', onFormKeydown);
   addOnButtonCloseClick(buttonClose, hideModalForm);
-  addEventListenerKeydown(fieldsText);
   pristine.reset();
 }
 
@@ -86,7 +86,7 @@ function hideModalForm() {
   hideModal(blockUploadOverlay);
   document.removeEventListener('keydown', onFormKeydown);
   addOnButtonCloseClick(buttonClose, hideModalForm, false);
-  addEventListenerKeydown(fieldsText, false);
+  document.addEventListener('keydown', onFormKeydown);
   formUpload.reset();
   pristine.reset();
 }

@@ -1,4 +1,4 @@
-import {renderComments} from './render-comments.js';
+import { onClickCommentsShow as renderComments } from './render-comments.js';
 
 const renderFullSizeMedia = ({url, likes, comments, description}) => {
   document.querySelector('.big-picture__img').querySelector('img').src = url;
