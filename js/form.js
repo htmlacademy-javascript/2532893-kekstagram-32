@@ -13,7 +13,7 @@ const HASHTAGS_ERROR_QUANTITY_TEXT = 'Превышено количество х
 const HASHTAGS_ERROR_UNIQUE_TEXT = 'Хэштеги повторяются';
 const COMMENT_ERROR_TEXT = 'Длина комментария больше 140 символов';
 
-const buttonSubmitText = {
+const MessagesSubmitButton = {
   IDLE: 'Сохранить',
   SENDING: 'Сохраняю...'
 };
@@ -26,7 +26,7 @@ const hashTagsField = formUpload.querySelector('.text__hashtags');
 const commentField = formUpload.querySelector('.text__description');
 const buttonClose = formUpload.querySelector('#upload-cancel');
 const buttonSubmit = formUpload.querySelector('#upload-submit');
-const fieldsText = [hashTagsField, commentField];
+const textFields = [hashTagsField, commentField];
 
 const blockEffects = sectionImgUpload.querySelector('.effects');
 const sliderContainer = sectionImgUpload.querySelector('.img-upload__effect-level');
@@ -78,7 +78,7 @@ function showModalForm() {
   showModal(blockUploadOverlay);
   document.addEventListener('keydown', onFormKeydown);
   addOnButtonCloseClick(buttonClose, hideModalForm);
-  addEventListenerKeydown(fieldsText);
+  addEventListenerKeydown(textFields);
   pristine.reset();
 }
 
@@ -86,7 +86,7 @@ function hideModalForm() {
   hideModal(blockUploadOverlay);
   document.removeEventListener('keydown', onFormKeydown);
   addOnButtonCloseClick(buttonClose, hideModalForm, false);
-  addEventListenerKeydown(fieldsText, false);
+  addEventListenerKeydown(textFields, false);
   formUpload.reset();
   pristine.reset();
 }
@@ -115,12 +115,12 @@ pristine.addValidator(
 
 const blockSubmitButton = () => {
   buttonSubmit.disabled = true;
-  buttonSubmit.textContent = buttonSubmitText.SENDING;
+  buttonSubmit.textContent = MessagesSubmitButton.SENDING;
 };
 
 const unblockSubmitButton = () => {
   buttonSubmit.disabled = false;
-  buttonSubmit.textContent = buttonSubmitText.IDLE;
+  buttonSubmit.textContent = MessagesSubmitButton.IDLE;
 };
 
 const setOnFormSubmit = (onSuccess) => {

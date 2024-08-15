@@ -4,7 +4,7 @@ const commentsList = document.querySelector('.social__comments');
 
 const STEP_COMMENTS_SHOW = 5;
 let commentsShow = 0;
-let newArrayComments = [];
+let newCommentsArray = [];
 
 const getTemplateComment = (arrayElement) => {
   const commentTemplate =
@@ -20,20 +20,20 @@ const resetCommentsShow = () => {
   commentsShow = 0;
 };
 
-const renderComments = (arrayComments) => {
+const onClickCommentsShow = (arrayComments) => {
   commentsList.innerHTML = '';
 
   if (Array.isArray(arrayComments)) {
-    newArrayComments = arrayComments;
+    newCommentsArray = arrayComments;
   }
 
   commentsShow += STEP_COMMENTS_SHOW;
-  if (commentsShow >= newArrayComments.length) {
-    commentsShow = newArrayComments.length;
+  if (commentsShow >= newCommentsArray.length) {
+    commentsShow = newCommentsArray.length;
     commentsLoader.classList.add('hidden');
   }
 
-  newArrayComments.slice(0, commentsShow).forEach((element) => {
+  newCommentsArray.slice(0, commentsShow).forEach((element) => {
     const comment = getTemplateComment(element);
     commentsList.insertAdjacentHTML('beforeEnd', comment);
   });
@@ -41,4 +41,4 @@ const renderComments = (arrayComments) => {
   socialCommentShow.textContent = commentsShow;
 };
 
-export { getTemplateComment, resetCommentsShow, renderComments };
+export { getTemplateComment, resetCommentsShow, onClickCommentsShow };
