@@ -2,7 +2,7 @@
 import {isEscapeKey} from './helpers/test-keys.js';
 import { areHashtagSymbolsValid, areHashtagsQuantityValid, areHashtagsUnique, areCommentValid } from './validate-tags.js';
 import {showModal, hideModal} from './modal.js';
-import {addOnButtonCloseClick, addEventListenerKeydown} from './helpers/event-listeners.js';
+import {addOnButtonCloseClick} from './helpers/event-listeners.js';
 import {sendData} from './api.js';
 import {showMessage} from './modal-message.js';
 
@@ -13,7 +13,7 @@ const HASHTAGS_ERROR_QUANTITY_TEXT = 'Превышено количество х
 const HASHTAGS_ERROR_UNIQUE_TEXT = 'Хэштеги повторяются';
 const COMMENT_ERROR_TEXT = 'Длина комментария больше 140 символов';
 
-const MessagesSubmitButton = {
+const buttonSubmitText = {
   IDLE: 'Сохранить',
   SENDING: 'Сохраняю...'
 };
@@ -26,7 +26,7 @@ const hashTagsField = formUpload.querySelector('.text__hashtags');
 const commentField = formUpload.querySelector('.text__description');
 const buttonClose = formUpload.querySelector('#upload-cancel');
 const buttonSubmit = formUpload.querySelector('#upload-submit');
-const textFields = [hashTagsField, commentField];
+const isFieldInFocus = () => document.activeElement === hashTagsField || document.activeElement === commentField;
 
 const blockEffects = sectionImgUpload.querySelector('.effects');
 const sliderContainer = sectionImgUpload.querySelector('.img-upload__effect-level');
@@ -68,8 +68,9 @@ const onInputFileChange = () => {
 };
 
 const onFormKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  if (isEscapeKey(evt) && !isFieldInFocus()) {
     evt.preventDefault();
+
     hideModalForm();
   }
 };
@@ -78,7 +79,6 @@ function showModalForm() {
   showModal(blockUploadOverlay);
   document.addEventListener('keydown', onFormKeydown);
   addOnButtonCloseClick(buttonClose, hideModalForm);
-  addEventListenerKeydown(textFields);
   pristine.reset();
 }
 
@@ -86,7 +86,7 @@ function hideModalForm() {
   hideModal(blockUploadOverlay);
   document.removeEventListener('keydown', onFormKeydown);
   addOnButtonCloseClick(buttonClose, hideModalForm, false);
-  addEventListenerKeydown(textFields, false);
+  document.addEventListener('keydown', onFormKeydown);
   formUpload.reset();
   pristine.reset();
 }
@@ -115,12 +115,12 @@ pristine.addValidator(
 
 const blockSubmitButton = () => {
   buttonSubmit.disabled = true;
-  buttonSubmit.textContent = MessagesSubmitButton.SENDING;
+  buttonSubmit.textContent = buttonSubmitText.SENDING;
 };
 
 const unblockSubmitButton = () => {
   buttonSubmit.disabled = false;
-  buttonSubmit.textContent = MessagesSubmitButton.IDLE;
+  buttonSubmit.textContent = buttonSubmitText.IDLE;
 };
 
 const setOnFormSubmit = (onSuccess) => {
